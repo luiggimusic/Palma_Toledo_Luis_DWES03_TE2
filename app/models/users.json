@@ -1,58 +1,82 @@
 [
     {
-        "id":"1",
-        "name":"Luis",
-        "surname":"Palma Toledo",
-        "dni":"29672737T",
-        "dateOfBirth":"17/12/1981",
-        "department":"Planning"
+        "id": 0,
+        "name": "Manuel",
+        "surname": "Lopez Gonzalez",
+        "dni": "44359406L",
+        "dateOfBirth": "15\/10\/1985",
+        "department": "Planning"
     },
     {
-        "id":"1",
-        "name":"Luis",
-        "surname":"Palma Toledo",
-        "dni":"29672737T",
-        "dateOfBirth":"17/12/1981",
-        "department":"Planning"
+        "id": 1,
+        "name": "David",
+        "surname": "Espinoza Ayala",
+        "dni": "23307142T",
+        "dateOfBirth": "07\/12\/1990",
+        "department": "Sales"
     },
     {
-        "id":"1",
-        "name":"Luis",
-        "surname":"Palma Toledo",
-        "dni":"29672737T",
-        "dateOfBirth":"17/12/1981",
-        "department":"Planning"
+        "id": 2,
+        "name": "Marta",
+        "surname": "Ruiz Jimenez",
+        "dni": "76439859A",
+        "dateOfBirth": "17\/11\/1980",
+        "department": "Purchases"
     },
     {
-        "id":"1",
-        "name":"Luis",
-        "surname":"Palma Toledo",
-        "dni":"29672737T",
-        "dateOfBirth":"17/12/1981",
-        "department":"Planning"
+        "id": 3,
+        "name": "Rafael",
+        "surname": "Alvarez Romero",
+        "dni": "10299255Q",
+        "dateOfBirth": "07\/06\/1976",
+        "department": "Operations"
     },
     {
-        "id":"1",
-        "name":"Luis",
-        "surname":"Palma Toledo",
-        "dni":"29672737T",
-        "dateOfBirth":"17/12/1981",
-        "department":"Planning"
+        "id": 4,
+        "name": "Alejandro",
+        "surname": "Navarro Gutierrez",
+        "dni": "24228259J",
+        "dateOfBirth": "01\/02\/1993",
+        "department": "Operations Manager"
     },
     {
-        "id":"1",
-        "name":"Luis",
-        "surname":"Palma Toledo",
-        "dni":"29672737T",
-        "dateOfBirth":"17/12/1981",
-        "department":"Planning"
+        "id": 5,
+        "name": "Rosa",
+        "surname": "Torres Ramos",
+        "dni": "23361012G",
+        "dateOfBirth": "11\/05\/1999",
+        "department": "Production Responsible"
     },
     {
-        "id":"1",
-        "name":"Luis",
-        "surname":"Palma Toledo",
-        "dni":"29672737T",
-        "dateOfBirth":"17/12/1981",
-        "department":"Planning"
+        "id": 6,
+        "name": "Daniel",
+        "surname": "Serrano Molina",
+        "dni": "66150847H",
+        "dateOfBirth": "17\/12\/1979",
+        "department": "Production Manager"
+    },
+    {
+        "id": 7,
+        "name": "Manuel",
+        "surname": "Lopez Gonzalez",
+        "dni": "44359406L",
+        "dateOfBirth": "15\/10\/1985",
+        "department": "Planning"
+    },
+    {
+        "id": 8,
+        "name": "Manuel",
+        "surname": "Lopez Gonzalez",
+        "dni": "44359406L",
+        "dateOfBirth": "15\/10\/1985",
+        "department": "Planning"
+    },
+    {
+        "id": 9,
+        "name": "Luis",
+        "surname": "Palma Toledo",
+        "dni": "29672737T",
+        "dateOfBirth": "15\/10\/1985",
+        "department": "Planning"
     }
 ]
