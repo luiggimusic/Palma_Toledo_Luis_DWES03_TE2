@@ -51,11 +51,34 @@ class User
         // Recupero los datos del JSON
         $usersObject = $this->getData();
 
+        // Valido los datos insertados en body (formulario) y voy completando el array $arrayErrores con los errores que aparezcan
+        $arrayErrores = array();
+        if (empty($data["name"])) {
+            $arrayErrores["name"] = 'El nombre es obligatorio';
+        }
+        if (empty($data["surname"])) {
+            $arrayErrores["surname"] = 'El apellido es obligatorio';
+        }
+        if (empty($data["dni"])) {
+            $arrayErrores["dni"] = 'El DNI es obligatorio';
+        } elseif (!validarDNI($data["dni"])) {
+            $arrayErrores["dni"] = 'El DNI no es válido';
+        } elseif (existeDNI($usersObject, $data["dni"])) {
+            $arrayErrores["dni"] = 'El DNI ya está registrado';
+            var_dump(existeDNI($usersObject, $data["dni"]));
+        }
+        if (empty($data["dateOfBirth"])) {
+            $arrayErrores["dateOfBirth"] = 'La fecha de nacimiento es obligatoria';
+        }
+        if (empty($data["department"])) {
+            $arrayErrores["department"] = 'El departamento es obligatorio';
+        }
+
         // Busco el último id que hay en el fichero y le sumo 1
         $id = array_key_last($usersObject) + 1;
 
-        // Una vez que tengo el id le indico que agregue en ese índice los datos que recibe según "clave"=>"valor" como un array, que en este caso es $data
-        $usersObject[$id] = (object) [
+        // Una vez que tengo las validaciones, **********el id le indico que agregue en ese índice los datos que recibe según "clave"=>"valor" como un array, que en este caso es $data
+        $usersObject[$id] = (array) [
             "id" => $id,
             "name" => $data["name"],
             "surname" => $data["surname"],
@@ -64,19 +87,6 @@ class User
             "department" => $data["department"]
         ];
 
-        // Valido los datos del formulario y voy completando un array con los errores que aparezcan
-        $arrayErrores = array();
-        if (is_null($data["name"])) {
-            $arrayErrores["name"] = 'El nombre es obligatorio';
-        }
-        if (is_null($data["surname"])) {
-            $arrayErrores["surname"] = 'El apellido es obligatorio';
-        }
-        if (is_null($data["dni"])) {
-            $arrayErrores["dni"] = 'El DNI es obligatorio';
-        } elseif (!validarDNI($data["dni"])) {
-            $arrayErrores["dni"] = 'El DNI no es válido';
-        }
 
         if (!count($arrayErrores) > 0) {
             $json = json_encode(array_values($usersObject), JSON_PRETTY_PRINT);
@@ -88,7 +98,7 @@ class User
             print_r($usersObject[$id]);
         } else {
 
-            $resp['failed'] = 'No se a podido crear el usuario';
+            $resp['failed'] = 'No se ha podido crear el usuario';
             print_r($resp);
             print_r($arrayErrores);
         }
@@ -122,3 +132,30 @@ function validarDNI($dni)
     $letra = letraNif($numero);
     return $dni == $numero . $letra;
 }
+
+
+
+// Verifica si el DNI ya existe
+
+function existeDNI($usersObject, $dni)
+{
+    foreach ($usersObject as $user) {
+        if ($user["dni"] === $dni) {
+            return true;
+        }
+    }
+    return false;
+}
+/*
+
+,
+    {
+        "id": 7,
+        "name": "Luis",
+        "surname": "Palma Toledo",
+        "dni": "29672737T",
+        "dateOfBirth": "15\/10\/1985",
+        "department": "Planning"
+    }
+
+    */

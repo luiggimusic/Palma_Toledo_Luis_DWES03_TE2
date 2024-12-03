@@ -57,26 +57,18 @@
     },
     {
         "id": 7,
-        "name": "Manuel",
-        "surname": "Lopez Gonzalez",
-        "dni": "44359406L",
-        "dateOfBirth": "15\/10\/1985",
-        "department": "Planning"
+        "name": "Miguel",
+        "surname": "Sanchez Martin",
+        "dni": "92404799E",
+        "dateOfBirth": "10\/12\/1975",
+        "department": "Operations"
     },
     {
         "id": 8,
-        "name": "Manuel",
-        "surname": "Lopez Gonzalez",
-        "dni": "44359406L",
-        "dateOfBirth": "15\/10\/1985",
-        "department": "Planning"
-    },
-    {
-        "id": 9,
-        "name": "Luis",
-        "surname": "Palma Toledo",
-        "dni": "29672737T",
-        "dateOfBirth": "15\/10\/1985",
-        "department": "Planning"
+        "name": "Francisco-Javier",
+        "surname": "Ramirez Gil",
+        "dni": "38377099N",
+        "dateOfBirth": "05\/02\/1999",
+        "department": "Operations"
     }
 ]
