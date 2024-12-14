@@ -1,7 +1,7 @@
 <?php
 
 require '../core/Router.php';
-require '../app/controllers/User.php';
+require '../app/controllers/UserController.php';
 require '../app/controllers/Department.php';
 require '../app/controllers/Product.php';
 require '../app/controllers/Movement.php';
@@ -13,29 +13,29 @@ $url = $_SERVER['QUERY_STRING'];
 $content = file_get_contents("php://input");
 $router = new Router();
 
-/***************************** User ****************************/
+/***************************** UserController ****************************/
 $router->add('/public/user/get', array(
-    'controller' => 'User',
+    'controller' => 'UserController',
     'action' => 'getAllUsers'
 ));
 
 $router->add('/public/user/get/{id}', array(
-    'controller' => 'User',
+    'controller' => 'UserController',
     'action' => 'getUserById'
 ));
 
 $router->add('/public/user/create', array(
-    'controller' => 'User',
+    'controller' => 'UserController',
     'action' => 'createUser'
 ));
 
 $router->add('/public/user/update/{id}', array(
-    'controller' => 'User',
+    'controller' => 'UserController',
     'action' => 'updateUser'
 ));
 
 $router->add('/public/user/delete/{id}', array(
-    'controller' => 'User',
+    'controller' => 'UserController',
     'action' => 'deleteUser'
 ));
 

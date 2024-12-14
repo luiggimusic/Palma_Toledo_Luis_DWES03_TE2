@@ -4,23 +4,23 @@
         "name": "Manuel",
         "surname": "Lopez Gonzalez",
         "dni": "44359406L",
-        "dateOfBirth": "15\/10\/1985",
+        "dateOfBirth": "17\/12\/1981",
         "department": "Planning"
     },
     {
         "id": 1,
-        "name": "David",
-        "surname": "Espinoza Ayala",
-        "dni": "23307142T",
-        "dateOfBirth": "07\/12\/1990",
-        "department": "Sales"
+        "name": "Juan",
+        "surname": "Perez",
+        "dni": "04622363F",
+        "dateOfBirth": "15\/10\/1985",
+        "department": "Planning"
     },
     {
         "id": 2,
         "name": "Marta",
         "surname": "Ruiz Jimenez",
         "dni": "76439859A",
-        "dateOfBirth": "17\/11\/1980",
+        "dateOfBirth": "03\/11\/1978",
         "department": "Purchases"
     },
     {
@@ -28,7 +28,7 @@
         "name": "Rafael",
         "surname": "Alvarez Romero",
         "dni": "10299255Q",
-        "dateOfBirth": "07\/06\/1976",
+        "dateOfBirth": "05\/01\/2003",
         "department": "Operations"
     },
     {
@@ -36,7 +36,7 @@
         "name": "Alejandro",
         "surname": "Navarro Gutierrez",
         "dni": "24228259J",
-        "dateOfBirth": "01\/02\/1993",
+        "dateOfBirth": "11\/10\/1999",
         "department": "Operations Manager"
     },
     {
@@ -44,7 +44,7 @@
         "name": "Rosa",
         "surname": "Torres Ramos",
         "dni": "23361012G",
-        "dateOfBirth": "11\/05\/1999",
+        "dateOfBirth": "01\/05\/1986",
         "department": "Production Responsible"
     },
     {
@@ -52,23 +52,15 @@
         "name": "Daniel",
         "surname": "Serrano Molina",
         "dni": "66150847H",
-        "dateOfBirth": "17\/12\/1979",
+        "dateOfBirth": "07\/10\/1980",
         "department": "Production Manager"
     },
     {
         "id": 7,
-        "name": "Miguel",
-        "surname": "Sanchez Martin",
-        "dni": "92404799E",
-        "dateOfBirth": "10\/12\/1975",
-        "department": "Operations"
-    },
-    {
-        "id": 8,
-        "name": "Francisco-Javier",
-        "surname": "Ramirez Gil",
-        "dni": "38377099N",
-        "dateOfBirth": "05\/02\/1999",
-        "department": "Operations"
+        "name": "David",
+        "surname": "Espinoza Ayala",
+        "dni": "23307142T",
+        "dateOfBirth": "07\/12\/1990",
+        "department": "Sales"
     }
 ]
