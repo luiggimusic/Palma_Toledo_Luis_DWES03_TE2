@@ -49,14 +49,6 @@ class User
     {
         return $this->department;
     }
-    public function getUserData()
-    {
-        echo "Nombre: " . $this->name . "\n";
-        echo "Apellidos: " . $this->surname . "\n";
-        echo "DNI: " . $this->dni . "\n";
-        echo "Fecha de nacimiento: " . $this->dateOfBirth . "\n";
-        echo "Nombre: " . $this->department . "\n";
-    }
 
     // Setters
     public function setId($id)
@@ -106,7 +98,7 @@ class User
     public static function getById($id)
     {
         $usersArray = self::datosJsonParseados();
-        $result = getById($usersArray, $id);
+        $result = getElementById($usersArray, $id);
         if (!$result) {
             echo "Usuario no encontrado";
         } else {
@@ -118,38 +110,37 @@ class User
     {
         $usersArray = self::datosJsonParseados();
 
-        if (existeDNI($usersArray, $userData['dni'])) {
-            $resp["dni"] = 'El DNI ya está registrado';
-            print_r($resp);
+        $arrayErrores = validacionesDeUsuario($userData);
+
+        if (existeDNI($usersArray, $userData['dni'])) { // Verifico si el DNI ya existe
+            $arrayErrores["dni"] = 'El DNI ya está registrado';
+        }
+
+        if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta
+            print_r($arrayErrores);
         } else {
-            $arrayErrores = validacionesDeUsuario($userData);
-            if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta
-                print_r($arrayErrores);
-                // return false;
-            } else {
-                $newId = nextId($usersArray); // Llamo a la función nextId para asignarle un id correcto al nuevo usuario
+            $newId = nextId($usersArray); // Llamo a la función nextId para asignarle un id correcto al nuevo usuario
 
-                // Creo un objeto User y asigno los datos con setters
-                $newUser = new self($newId, '', '', '', '', ''); // Inicializo el objeto con el nuevo ID
-                $newUser->setName($userData['name']);
-                $newUser->setSurname($userData['surname']);
-                $newUser->setDni($userData['dni']);
-                $newUser->setDateOfBirth($userData['dateOfBirth']);
-                $newUser->setDepartment($userData['department']);
+            // Creo un objeto User y asigno los datos con setters
+            $newUser = new self($newId, '', '', '', '', ''); // Inicializo el objeto con el nuevo ID
+            $newUser->setName($userData['name']);
+            $newUser->setSurname($userData['surname']);
+            $newUser->setDni($userData['dni']);
+            $newUser->setDateOfBirth($userData['dateOfBirth']);
+            $newUser->setDepartment($userData['department']);
 
-                // Convierto el objeto User a un array para guardarlo en el JSON
-                $usersArray[] = [
-                    'id' => $newUser->getId(),
-                    'name' => $newUser->getName(),
-                    'surname' => $newUser->getSurname(),
-                    'dni' => $newUser->getDni(),
-                    'dateOfBirth' => $newUser->getDateOfBirth(),
-                    'department' => $newUser->getDepartment(),
-                ];
-                // Guardo en el JSON
-                $newJsonData = json_encode($usersArray, JSON_PRETTY_PRINT);
-                return file_put_contents(self::getFilePath(), $newJsonData) !== false;
-            }
+            // Convierto el objeto User a un array para guardarlo en el JSON
+            $usersArray[] = [
+                'id' => $newUser->getId(),
+                'name' => $newUser->getName(),
+                'surname' => $newUser->getSurname(),
+                'dni' => $newUser->getDni(),
+                'dateOfBirth' => $newUser->getDateOfBirth(),
+                'department' => $newUser->getDepartment(),
+            ];
+            // Guardo en el JSON
+            $newJsonData = json_encode($usersArray, JSON_PRETTY_PRINT);
+            return file_put_contents(self::getFilePath(), $newJsonData) !== false;
         }
     }
     public static function update($id, $newData)
@@ -225,7 +216,7 @@ class User
         $usersArray = self::datosJsonParseados();
 
         // Busco el usuario por ID
-        $result = getById($usersArray, $id);
+        $result = getElementById($usersArray, $id);
         if (!$result) {
             echo "No se ha encontrado el usuario con id: " . $id . "\n";
             return false;
@@ -258,17 +249,6 @@ function existeDNI($usersArray, $dni)
     foreach ($usersArray as $user) {
         if ($user['dni'] === $dni) {
             return true;
-        }
-    }
-    return false;
-}
-
-function getId($dataArray, $id)
-{
-    foreach ($dataArray as $data) {
-        if ($data['id'] === $id) {
-            return true;
-            break;
         }
     }
     return false;

@@ -2,10 +2,11 @@
 
 require '../core/Router.php';
 require '../app/controllers/UserController.php';
-require '../app/controllers/Department.php';
-require '../app/controllers/Product.php';
-require '../app/controllers/Movement.php';
-require '../app/controllers/MovementType.php';
+require '../app/controllers/CategoryController.php';
+require '../app/controllers/DepartmentController.php';
+require '../app/controllers/ProductController.php';
+require '../app/controllers/MovementController.php';
+require '../app/controllers/MovementTypeController.php';
 
 $url = $_SERVER['QUERY_STRING'];
 // echo 'URL = ' . $url . '<br>';
@@ -42,134 +43,134 @@ $router->add('/public/user/delete/{id}', array(
 
 /***************************** Department ****************************/
 $router->add('/public/department/get', array(
-    'controller' => 'Department',
+    'controller' => 'DepartmentController',
     'action' => 'getAllDepartments'
 ));
 
 $router->add('/public/department/get/{id}', array(
-    'controller' => 'Department',
+    'controller' => 'DepartmentController',
     'action' => 'getDepartmentById'
 ));
 
 $router->add('/public/department/create', array(
-    'controller' => 'Department',
+    'controller' => 'DepartmentController',
     'action' => 'createDepartment'
 ));
 
 $router->add('/public/department/update/{id}', array(
-    'controller' => 'Department',
+    'controller' => 'DepartmentController',
     'action' => 'updateDepartment'
 ));
 
 $router->add('/public/department/delete/{id}', array(
-    'controller' => 'Department',
+    'controller' => 'DepartmentController',
     'action' => 'deleteDepartment'
 ));
 
 /***************************** Product ****************************/
 $router->add('/public/product/get', array(
-    'controller' => 'Product',
+    'controller' => 'ProductController',
     'action' => 'getAllProducts'
 ));
 
 $router->add('/public/product/get/{id}', array(
-    'controller' => 'Product',
+    'controller' => 'ProductController',
     'action' => 'getProductById'
 ));
 
 $router->add('/public/product/create', array(
-    'controller' => 'Product',
+    'controller' => 'ProductController',
     'action' => 'createProduct'
 ));
 
 $router->add('/public/product/update/{id}', array(
-    'controller' => 'Product',
+    'controller' => 'ProductController',
     'action' => 'updateProduct'
 ));
 
 $router->add('/public/product/delete/{id}', array(
-    'controller' => 'Product',
+    'controller' => 'ProductController',
     'action' => 'deleteProduct'
 ));
 
 /***************************** Product Category ****************************/
 $router->add('/public/category/get', array(
-    'controller' => 'Category',
+    'controller' => 'CategoryController',
     'action' => 'getAllCategories'
 ));
 
 $router->add('/public/category/get/{id}', array(
-    'controller' => 'Category',
+    'controller' => 'CategoryController',
     'action' => 'getCategoryById'
 ));
 
 $router->add('/public/category/create', array(
-    'controller' => 'Category',
+    'controller' => 'CategoryController',
     'action' => 'createCategory'
 ));
 
 $router->add('/public/category/update/{id}', array(
-    'controller' => 'Category',
+    'controller' => 'CategoryController',
     'action' => 'updateCategory'
 ));
 
 $router->add('/public/category/delete/{id}', array(
-    'controller' => 'Category',
+    'controller' => 'CategoryController',
     'action' => 'deleteCategory'
 ));
 
 /***************************** Movement ****************************/
 $router->add('/public/movement/get', array(
-    'controller' => 'Movement',
+    'controller' => 'MovementController',
     'action' => 'getAllMovements'
 ));
 
 $router->add('/public/movement/get/{data}', array(
-    'controller' => 'Movement',
+    'controller' => 'MovementController',
     'action' => 'getmovementByData'
 ));
 
 // Movimiento de venta
 $router->add('/public/movement/sale', array(
-    'controller' => 'Movement',
+    'controller' => 'MovementController',
     'action' => 'sale'
 ));
 
 // Movimiento de compra
 $router->add('/public/movement/purchase', array(
-    'controller' => 'Movement',
+    'controller' => 'MovementController',
     'action' => 'purchase'
 ));
 
 // Movimiento de transferencia de inventario
 $router->add('/public/movement/inventoryTransfer', array(
-    'controller' => 'Movement',
+    'controller' => 'MovementController',
     'action' => 'inventoryTransfer'
 ));
 
 /***************************** Movement type ****************************/
 $router->add('/public/movementType/get', array(
-    'controller' => 'MovementType',
+    'controller' => 'MovementTypeController',
     'action' => 'getAllMovementTypes'
 ));
 
 $router->add('/public/movementType/get/{id}', array(
-    'controller' => 'MovementType',
+    'controller' => 'MovementTypeController',
     'action' => 'getMovementTypesById'
 ));
 
 $router->add('/public/movementType/create', array(
-    'controller' => 'MovementType',
+    'controller' => 'MovementTypeController',
     'action' => 'createMovementType'
 ));
 
 $router->add('/public/movementType/update/{id}', array(
-    'controller' => 'MovementType',
+    'controller' => 'MovementTypeController',
     'action' => 'updateMovementType'
 ));
 
 $router->add('/public/movementType/delete/{id}', array(
-    'controller' => 'MovementType',
+    'controller' => 'MovementTypeController',
     'action' => 'deleteMovementType'
 ));
 

@@ -64,7 +64,7 @@ class UserController
 
     function deleteUser($id)
     {
-        $success = User::delete($id); // Llamo a la función delete para obtener todos los usuarios
+        $success = User::delete($id);
 
         if ($success) {
             echo "Usuario eliminado"; 

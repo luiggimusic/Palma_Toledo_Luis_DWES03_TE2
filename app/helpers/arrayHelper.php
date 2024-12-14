@@ -1,7 +1,7 @@
 <?php
 
     // Con esta función pretendo pasar el array de objetos y que devuelva el objeto si lo encuentra o null si no.
-    function getById($dataArray,$id)
+    function getElementById($dataArray,$id)
     {
         foreach ($dataArray as $data) {
             if ($data['id'] === $id) {
@@ -12,6 +12,21 @@
         }
         return null;
     }
+
+function getId($dataArray, $id)
+{
+    foreach ($dataArray as $data) {
+        if ($data['id'] === $id) {
+            return true;
+            break;
+        }
+    }
+    return false;
+}
+
+
+
+
 
 function nextId($dataArray){
     $ids = array_column($dataArray, 'id'); // Extraigo los IDs de su columna
