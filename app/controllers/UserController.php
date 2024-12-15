@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 require_once '../app/models/User.php'; // cargo el modelo User
@@ -33,15 +34,15 @@ class UserController
         $success = User::create($userData);
 
         if ($success) {
-            echo "Usuario creado correctamente.";
+            echo "Usuario creado correctamente";
         } else {
-            echo "No se ha creado el usuario.";
+            echo "No se ha creado el usuario";
         }
     }
 
     // PUT
     function updateUser($id, $data)
-    {// Creo un array asociativo con los datos recibidos
+    { // Creo un array asociativo con los datos recibidos
         $userData = [
             'id' => $id,
             'name' => $data["name"],
@@ -55,21 +56,20 @@ class UserController
         $success = User::update($id, $userData);
 
         if ($success) {
-            echo "Usuario actualizado correctamente."; 
-        } 
-        else{
+            echo "Usuario actualizado correctamente";
+        } else {
             echo "Error al actualizar";
         }
     }
 
+    // DELETE
     function deleteUser($id)
     {
         $success = User::delete($id);
 
         if ($success) {
-            echo "Usuario eliminado"; 
-        } 
-        else{
+            echo "Usuario eliminado";
+        } else {
             echo "Error al eliminar";
         }
     }

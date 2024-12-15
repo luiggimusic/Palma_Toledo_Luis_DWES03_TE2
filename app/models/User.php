@@ -155,7 +155,7 @@ class User
             if ($data['id'] === $id) {
                 $arrayErrores = validacionesDeUsuario($newData);
 
-                if (existeDNIExcluyendo($usersArray, $newData['dni'], $id)) { // Evito que se duplique un DNI
+                if (existsObjectId($usersArray, $newData['dni'], 'dni')) { // Evito que se duplique un DNI
                     $arrayErrores["dni"] = 'El DNI ya está registrado';
                 }
                 if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta
@@ -230,40 +230,6 @@ class User
 }
 
 /*********** Funciones necesarias ***********/
-// Validación del DNI del usuario
-function letraNif($numero)
-{
-    return substr("TRWAGMYFPDXBNJZSQVHLCKE", strtr($numero, "XYZ", "012") % 23, 1);
-}
-
-function validarDNI($dni)
-{
-    $numero = substr($dni, 0, 8);
-    $letra = letraNif($numero);
-    return $dni == $numero . $letra;
-}
-
-// Verifico si el DNI ya existe
-function existeDNI($usersArray, $dni)
-{
-    foreach ($usersArray as $user) {
-        if ($user['dni'] === $dni) {
-            return true;
-        }
-    }
-    return false;
-}
-
-// Función para garantizar que no se duplique el DNI
-function existeDNIExcluyendo($usersArray, $dni, int $id)
-{
-    foreach ($usersArray as $user) {
-        if ($user['dni'] === $dni && (int)$user['id'] !== $id) {
-            return true; // DNI encontrado en otro usuario
-        }
-    }
-    return false; // DNI no encontrado o pertenece al usuario actual
-}
 
 function validacionesDeUsuario($data)
 {

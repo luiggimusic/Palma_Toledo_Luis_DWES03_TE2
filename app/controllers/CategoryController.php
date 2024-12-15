@@ -33,9 +33,9 @@ class CategoryController
         $success = Category::create($categoryData);
 
         if ($success) {
-            echo "Categoría creada correctamente.";
+            echo "Categoría creada correctamente";
         } else {
-            echo "No se ha creado la categoría.";
+            echo "No se ha creado la categoría";
         }
     }
 
@@ -51,13 +51,14 @@ class CategoryController
         $success = Category::update($id, $data);
 
         if ($success) {
-            echo "Categoría actualizada correctamente."; 
+            echo "Categoría actualizada correctamente"; 
         } 
         else{
             echo "Error al actualizar";
         }
     }
-    
+
+    // DELETE
     function deleteCategory($id)
     {
         $success = Category::delete($id);

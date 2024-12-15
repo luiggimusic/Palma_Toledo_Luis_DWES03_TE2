@@ -2,19 +2,19 @@
 
 /** Definición del modelo con su tipo de dato e importo el fichero JSON
  **/
-class Category
+class Department
 {
     private int $id;
-    private string $categoryId;
-    private string $categoryName;
+    private string $departmenId;
+    private string $departmentName;
 
     // Constructor para inicializar propiedades
 
-    public function __construct(int $id, string $categoryId, string $categoryName)
+    public function __construct(int $id, string $departmenId, string $departmentName)
     {
         $this->id = $id;
-        $this->categoryId = $categoryId;
-        $this->categoryName = $categoryName;
+        $this->departmenId = $departmenId;
+        $this->departmentName = $departmentName;
     }
 
     // Getters
@@ -22,13 +22,13 @@ class Category
     {
         return $this->id;
     }
-    public function getCategoryId()
+    public function getDepartmentId()
     {
-        return $this->categoryId;
+        return $this->departmenId;
     }
-    public function getCategoryName()
+    public function getDepartmentName()
     {
-        return $this->categoryName;
+        return $this->departmentName;
     }
 
     // Setters
@@ -36,17 +36,17 @@ class Category
     {
         $this->id = $id;
     }
-    public function setCategoryId($categoryId)
+    public function setDepartmentId($departmenId)
     {
-        $this->categoryId = $categoryId;
+        $this->departmenId = $departmenId;
     }
-    public function setCategoryName($categoryName)
+    public function setDepartmentName($departmentName)
     {
-        $this->categoryName = $categoryName;
+        $this->departmentName = $departmentName;
     }
     private static function getFilePath()
-    { // Por visualización he creado esta función decoficiando el JSON y poder usarlo en las otras funciones
-        return __DIR__ . '/../models/data/category.json'; // Ruta del archivo JSON
+    { // Por visualización he creado esta función decoficando el JSON y poder usarlo en las otras funciones
+        return __DIR__ . '/../models/data/department.json'; // Ruta del archivo JSON
     }
 
     private static function datosJsonParseados()
@@ -67,7 +67,7 @@ class Category
         $dataArray = self::datosJsonParseados();
         $result = getElementById($dataArray, $id);
         if (!$result) {
-            echo "Categoría no encontrada";
+            echo "Departamento no encontrado";
         } else {
             echo $result;
         };
@@ -77,10 +77,10 @@ class Category
     {
         $dataArray = self::datosJsonParseados();
 
-        $arrayErrores = validacionesDeCategoria($newData);
+        $arrayErrores = validacionesDeDepartment($newData);
 
-        if (existsObjectId($dataArray, $newData['categoryId'],'categoryId')) {
-            $arrayErrores['categoryId'] = 'El ID de esta categoría ya está registrado';
+        if (existsObjectid($dataArray, $newData['departmenId'],'departmenId')) {
+            $arrayErrores["departmenId"] = 'El ID de este departamento ya está registrado';
         }
         if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta
             print_r($arrayErrores);
@@ -89,14 +89,14 @@ class Category
 
             // Creo un objeto de la clase y asigno los datos con setters
             $newElement = new self($newId, '', '', '', '', ''); // Inicializo el objeto con el nuevo ID
-            $newElement->setCategoryId($newData['categoryId']);
-            $newElement->setCategoryName($newData['categoryName']);
+            $newElement->setDepartmentId($newData['departmenId']);
+            $newElement->setDepartmentName($newData['departmentName']);
 
             // Convierto el objeto de la clase a un array para guardarlo en el JSON
             $dataArray[] = [
                 'id' => $newElement->getId(),
-                'categoryId' => $newElement->getCategoryId(),
-                'categoryName' => $newElement->getCategoryName(),
+                'departmenId' => $newElement->getDepartmentId(),
+                'departmentName' => $newElement->getDepartmentName(),
             ];
             // Guardo en el JSON
             $newJsonData = json_encode($dataArray, JSON_PRETTY_PRINT);
@@ -110,14 +110,14 @@ class Category
 
         // Busco por ID
         $elementConfirmed = false;
-        foreach ($dataArray as &$data) { // Uso la referencia, para que los cambios que realizo 
+        foreach ($dataArray as &$data) { // Uso la referencia "&", para que los cambios que realizo 
             //en el array dentro del bucle se apliquen al array original.
 
             if ($data['id'] === $id) {
-                $arrayErrores = validacionesDeCategoria($newData);
+                $arrayErrores = validacionesDeDepartment($newData);
 
-                if (existeIdExcluyendo($dataArray, $newData['categoryId'], $id)) { // Evito que se duplique el Id de la clase
-                    $arrayErrores["categoryId"] = 'El ID ya está registrado';
+                if (existeIdExcluyendo($dataArray, $newData['departmenId'], $id)) { // Evito que se duplique el Id de la clase
+                    $arrayErrores["departmenId"] = 'El ID ya está registrado';
                 }
                 if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta
                     print_r($arrayErrores);
@@ -127,23 +127,23 @@ class Category
                 // Creo un objeto con los datos actuales
                 $element = new self(
                     $data['id'],
-                    $data['categoryId'],
-                    $data['categoryName'],
+                    $data['departmenId'],
+                    $data['departmentName'],
                 );
 
                 // Uso los setters para actualizar los datos
-                if (isset($newData['categoryId'])) {
-                    $element->setCategoryId($newData['categoryId']);
+                if (isset($newData['departmenId'])) {
+                    $element->setDepartmentId($newData['departmenId']);
                 }
-                if (isset($newData['categoryName'])) {
-                    $element->setCategoryName($newData['categoryName']);
+                if (isset($newData['departmentName'])) {
+                    $element->setDepartmentName($newData['departmentName']);
                 }
 
                 // Actualizo los datos en el array
                 $data = [
                     'id' => $element->getId(),
-                    'categoryId' => $element->getCategoryId(),
-                    'categoryName' => $element->getCategoryName(),
+                    'departmenId' => $element->getDepartmentId(),
+                    'departmentName' => $element->getDepartmentName(),
                 ];
                 $elementConfirmed  = true;
                 unset($data);
@@ -164,7 +164,7 @@ class Category
         // Busco por ID
         $result = getElementById($dataArray, $id);
         if (!$result) {
-            echo "No se ha encontrado la categoría con con id: " . $id . "\n";
+            echo "No se ha encontrado el departamento con con id: " . $id . "\n";
             return false;
         } else {
             unset($dataArray[$id]);
@@ -177,15 +177,15 @@ class Category
 
 /*********** Funciones necesarias ***********/
 
-function validacionesDeCategoria($data)
+function validacionesDeDepartment($data)
 {
     // Valido los datos insertados en body (formulario) y voy completando el array $arrayErrores con los errores que aparezcan
     $arrayErrores = array();
-    if (empty($data["categoryId"])) {
-        $arrayErrores["categoryId"] = 'La ID de categoría es obligatoria';
+    if (empty($data["departmenId"])) {
+        $arrayErrores["departmenId"] = 'El ID de departamento es obligatorio';
     }
-    if (empty($data["categoryName"])) {
-        $arrayErrores["categoryName"] = 'El nombre de la categoría es obligatoria';
+    if (empty($data["departmentName"])) {
+        $arrayErrores["departmentName"] = 'El nombre del departemento es obligatorio';
     }
     return $arrayErrores;
 }
