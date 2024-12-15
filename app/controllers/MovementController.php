@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+require_once '../app/models/Movement.php'; // cargo el modelo
+require_once '../app/helpers/arrayHelper.php'; // cargo el fichero con las funciones que me permitirán trabajar con los arrays
+
 class MovementController
 {
     function __construct() {}
@@ -7,28 +12,38 @@ class MovementController
     // GET
     function getAllMovements()
     {
-        echo "Hola desde el método getAllMovements() de Movement Controller <br>";
+        $dataArray = Movement::getAll();
+        print_r($dataArray);
     }
 
-    function getMovementByData($data)
+    function getMovementByData($id)
     {
-        echo "Hola desde el método getMovementByData(" . $data . ") de Movement Controller <br>";
-        echo "La data del Movement es " . $data . "<br>";
+        Movement::getById($id);
+
     }
 
     // POST
-    function sale($data) {
-        echo "Hola desde el método sale() de Movement Controller <br>";
-        echo "Los datos de la venta son " .json_encode($data)."<br>";
-    }
+    function create($data)
+    {
+        $movementData = [
+            'productCode' => $data["productCode"],
+            'productName' => $data["productName"],
+            'fromBatchNumber' => $data["fromBatchNumber"],
+            'toBatchNumber' => $data["toBatchNumber"],
+            'fromLocation' => $data["fromLocation"],
+            'toLocation' => $data["toLocation"],
+            'quantity' => $data["quantity"],
+            'movementId' => $data["movementId"],
+            'movementDate' => $data["movementDate"],
+        ];
 
-    function purchase($data) {
-        echo "Hola desde el método purchase() de Movement Controller <br>";
-        echo "Los datos de la compra son " .json_encode($data)."<br>";
-    }
+        // Llamo al método estático "create"
+        $success = Movement::create($movementData);
 
-    function inventoryTransfer($data) {
-        echo "Hola desde el método inventoryTransfer() de Movement Controller <br>";
-        echo "Los datos de la transferencia de inventario son " .json_encode($data)."<br>";
+        if ($success) {
+            echo "Movimiento registrado correctamente";
+        } else {
+            echo "No se ha registrado el movimiento";
+        }
     }
 }

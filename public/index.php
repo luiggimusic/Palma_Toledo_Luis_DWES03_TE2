@@ -125,27 +125,14 @@ $router->add('/public/movement/get', array(
     'action' => 'getAllMovements'
 ));
 
-$router->add('/public/movement/get/{data}', array(
+$router->add('/public/movement/get/{id}', array(
     'controller' => 'MovementController',
-    'action' => 'getmovementByData'
+    'action' => 'getMovementByData'
 ));
 
-// Movimiento de venta
-$router->add('/public/movement/sale', array(
+$router->add('/public/movement/create', array(
     'controller' => 'MovementController',
-    'action' => 'sale'
-));
-
-// Movimiento de compra
-$router->add('/public/movement/purchase', array(
-    'controller' => 'MovementController',
-    'action' => 'purchase'
-));
-
-// Movimiento de transferencia de inventario
-$router->add('/public/movement/inventoryTransfer', array(
-    'controller' => 'MovementController',
-    'action' => 'inventoryTransfer'
+    'action' => 'create'
 ));
 
 /***************************** Movement type ****************************/
@@ -200,11 +187,6 @@ if (!empty($urlParams[2])) {
     $urlArray['action'] = 'index';
 }
 
-// Mostramos las rutas
-// echo '<pre>';
-// print_r($urlArray) . '<br>';
-// echo '</pre>';
-
 if ($router->matchRoute($urlArray)) {
     $method = $_SERVER['REQUEST_METHOD'];
 
@@ -235,5 +217,5 @@ if ($router->matchRoute($urlArray)) {
         echo "El método no existe";
     }
 } else {
-    echo "No route found for URL " . $url;
+    echo "URL no válida: error 404 Not Found \n" . $url;
 }

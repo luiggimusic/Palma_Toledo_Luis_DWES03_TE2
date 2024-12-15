@@ -1,10 +1,11 @@
 [
     {
         "id": 0,
-        "productId": "3001-01-0015",
+        "productCode": "3001-01-0015",
         "productName": "SEPARADOR 450X270",
         "fromBatchNumber": "10000254",
         "toBatchNumber": "10000254",
+        "fromLocation": "EMBAL",
         "toLocation": "EMBAL",
         "quantity": 50,
         "movementId": "PU",
@@ -12,8 +13,8 @@
     },
     {
         "id": 1,
-        "productId": "FC1N0F2S1A02",
-        "productName": "F\/B-A\/C-VW\/M-90º BRAZED NW6",
+        "productCode": "FC1N0F2S1A02",
+        "productName": "F\/B-A\/C-VW\/M-90\u00ba BRAZED NW6",
         "fromBatchNumber": "20240809",
         "toBatchNumber": "20240809",
         "fromLocation": "ENCAIXAT",
@@ -24,7 +25,7 @@
     },
     {
         "id": 2,
-        "productId": "FC1N0F2S1B-PXI",
+        "productCode": "FC1N0F2S1B-PXI",
         "productName": "SEMIFINISHED PART P2141-S",
         "fromBatchNumber": "10000206",
         "toBatchNumber": "10000206",
@@ -36,7 +37,7 @@
     },
     {
         "id": 3,
-        "productId": "FC1H2K8AAA02-FAB",
+        "productCode": "FC1H2K8AAA02-FAB",
         "productName": "F\/B-A\/C-BMW\/M",
         "fromBatchNumber": "20241111-215",
         "toBatchNumber": "20241111-215",
@@ -48,7 +49,7 @@
     },
     {
         "id": 4,
-        "productId": "1716187-00-D-FAB",
+        "productCode": "1716187-00-D-FAB",
         "productName": "BALANCE RING, INLET, ROTOR, PM291, GROOVED",
         "fromBatchNumber": "20241209-204",
         "toBatchNumber": "20241209-204",
@@ -60,7 +61,7 @@
     },
     {
         "id": 5,
-        "productId": "3001-01-0017",
+        "productCode": "3001-01-0017",
         "productName": "TAPA CAIXA 480X285X45MM EXTERIOR",
         "fromBatchNumber": "10000254",
         "toBatchNumber": "10000254",
@@ -72,7 +73,7 @@
     },
     {
         "id": 6,
-        "productId": "FC1K4K8PAB-PXI",
+        "productCode": "FC1K4K8PAB-PXI",
         "productName": "SEMIFINISHED PART P2139-1-S",
         "fromBatchNumber": "20233552",
         "toBatchNumber": "20233552",
@@ -84,7 +85,7 @@
     },
     {
         "id": 7,
-        "productId": "1716186-00-C-FAB",
+        "productCode": "1716186-00-C-FAB",
         "productName": "BALANCE RING, OUTLET, ROTOR,PM291",
         "fromBatchNumber": "20241202-201",
         "toBatchNumber": "20241202-201",
@@ -96,7 +97,7 @@
     },
     {
         "id": 8,
-        "productId": "FC1H2K8AAA-PXI",
+        "productCode": "FC1H2K8AAA-PXI",
         "productName": "SEMIFINISHED PART P2176-1-S",
         "fromBatchNumber": "10000254",
         "toBatchNumber": "10000254",
@@ -108,7 +109,7 @@
     },
     {
         "id": 9,
-        "productId": "3001-01-0005",
+        "productCode": "3001-01-0005",
         "productName": "CAIXA 280X198X120MM",
         "fromBatchNumber": "10000254",
         "toBatchNumber": "10000254",
@@ -117,5 +118,41 @@
         "quantity": 30,
         "movementId": "PU",
         "movementDate": "12\/10\/2024"
+    },
+    {
+        "id": 10,
+        "productCode": "FC1N0F2S1B-PXI",
+        "productName": "SEMIFINISHED PART P2141-S",
+        "fromBatchNumber": "10000206",
+        "toBatchNumber": "10000206",
+        "fromLocation": "M221",
+        "toLocation": "M221",
+        "quantity": 1235,
+        "movementId": "TR",
+        "movementDate": "04\/23\/2024"
+    },
+    {
+        "id": 11,
+        "productCode": "FC1N0F2S1B-PXI",
+        "productName": "SEMIFINISHED PART P2141-S",
+        "fromBatchNumber": "10000205",
+        "toBatchNumber": "10000206",
+        "fromLocation": "M221",
+        "toLocation": "M221",
+        "quantity": 1235,
+        "movementId": "TR",
+        "movementDate": "04\/23\/2024"
+    },
+    {
+        "id": 12,
+        "productCode": "FC1N0F2S1B-PXI",
+        "productName": "SEMIFINISHED PART P2141-S",
+        "fromBatchNumber": "10000205",
+        "toBatchNumber": "10000206",
+        "fromLocation": "M221",
+        "toLocation": "M221",
+        "quantity": 1235,
+        "movementId": "TR",
+        "movementDate": "04\/23\/2024"
     }
 ]

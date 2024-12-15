@@ -14,7 +14,8 @@ class ProductController
     function getAllProducts()
     {
         $dataArray = Product::getAll();
-        print_r($dataArray);    }
+        print_r($dataArray);
+    }
 
     function getProductById($id)
     {
@@ -22,7 +23,8 @@ class ProductController
     }
 
     // POST
-    function createProduct($data) {
+    function createProduct($data)
+    {
         $productData = [
             'productCode' => $data["productCode"],
             'productName' => $data["productName"],
@@ -43,7 +45,8 @@ class ProductController
     }
 
     // PUT
-    function updateProduct($id, $data) {
+    function updateProduct($id, $data)
+    {
         $productData = [
             'id' => $data["id"],
             'productCode' => $data["productCode"],
@@ -65,7 +68,8 @@ class ProductController
             echo "Error al actualizar";
         }
     }
-    function deleteProduct($id) {
+    function deleteProduct($id)
+    {
         $success = Product::delete($id);
         if ($success) {
             echo "Producto eliminado";
