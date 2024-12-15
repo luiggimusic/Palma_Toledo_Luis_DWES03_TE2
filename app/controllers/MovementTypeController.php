@@ -1,34 +1,70 @@
 <?php
-class MovementType
+
+declare(strict_types=1);
+
+require_once '../app/models/MovementType.php'; // cargo el modelo
+require_once '../app/helpers/arrayHelper.php'; // cargo el fichero con las funciones que me permitirán trabajar con los arrays
+
+class MovementTypeController
 {
     function __construct() {}
 
     // GET
     function getAllMovementTypes()
     {
-        echo "Hola desde el método getAllMovementTypes() de MovementType Controller <br>";
+        $dataArray = MovementType::getAll();
+        print_r($dataArray);
     }
 
     function getMovementTypeById($id)
     {
-        echo "Hola desde el método getMovementTypeById(" . $id . ") de MovementType Controller <br>";
-        echo "El ID del MovementType es " . $id . "<br>";
+        MovementType::getById($id);
     }
 
     // POST
-    function createMovementType($data) {
-        echo "Hola desde el método createmovementType() de MovementType Controller <br>";
-        echo "Los datos del MovementType son " .json_encode($data)."<br>";
+    function createMovementType($data)
+    {
+        $movementTypeData = [
+            'movementId' => $data["movementId"],
+            'movementName' => $data["movementName"],
+        ];
+
+        // Llamo al método estático "create"
+        $success = MovementType::create($movementTypeData);
+
+        if ($success) {
+            echo "Tipo de movimiento creado correctamente";
+        } else {
+            echo "No se ha creado el tipo de movimiento";
+        }
     }
 
     // PUT
-    function updateMovementType($id, $data) {
-        echo "Hola desde el método updateMovementType() de MovementType Controller <br>";
-        echo "El ID del MovementType es " . $id . "<br>";
-        echo "Los datos del MovementType son " .json_encode($data)."<br>";
+    function updateMovementType($id, $data)
+    {
+        $movementTypeData = [
+            'id' => $data["id"],
+            'movementId' => $data["movementId"],
+            'movementName' => $data["movementName"],
+        ];
+        // Llamo al método estático "update" para actualizar
+        $success = MovementType::update($id, $data);
+
+        if ($success) {
+            echo "Tipo de movimiento actualizado correctamente";
+        } else {
+            echo "Error al actualizar";
+        }
     }
-    function deleteMovementType($id) {
-        echo "Hola desde el método deleteMovementType() de MovementType Controller <br>";
-        echo "El ID del MovementType es " . $id . "<br>";
+    function deleteMovementType($id)
+    {
+        $success = MovementType::delete($id);
+
+        if ($success) {
+            echo "Tipo de movimiento eliminado"; 
+        } 
+        else{
+            echo "Error al eliminar";
+        }
     }
 }

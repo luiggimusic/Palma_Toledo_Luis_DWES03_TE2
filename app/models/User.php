@@ -155,7 +155,7 @@ class User
             if ($data['id'] === $id) {
                 $arrayErrores = validacionesDeUsuario($newData);
 
-                if (existsObjectId($usersArray, $newData['dni'], 'dni')) { // Evito que se duplique un DNI
+                if (existeIdExcluyendo($usersArray, $newData['dni'], $id,'dni')) { // Evito que se duplique un DNI
                     $arrayErrores["dni"] = 'El DNI ya está registrado';
                 }
                 if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta

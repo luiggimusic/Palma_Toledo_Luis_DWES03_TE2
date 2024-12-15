@@ -79,7 +79,7 @@ class Category
 
         $arrayErrores = validacionesDeCategoria($newData);
 
-        if (existsObjectId($dataArray, $newData['categoryId'],'categoryId')) {
+        if (existsObjectId($dataArray, $newData['categoryId'], 'categoryId')) {
             $arrayErrores['categoryId'] = 'El ID de esta categoría ya está registrado';
         }
         if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta
@@ -116,7 +116,7 @@ class Category
             if ($data['id'] === $id) {
                 $arrayErrores = validacionesDeCategoria($newData);
 
-                if (existeIdExcluyendo($dataArray, $newData['categoryId'], $id)) { // Evito que se duplique el Id de la clase
+                if (existeIdExcluyendo($dataArray, $newData['categoryId'], $id, 'categoryId')) { // Evito que se duplique el Id de la clase
                     $arrayErrores["categoryId"] = 'El ID ya está registrado';
                 }
                 if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta
@@ -164,7 +164,7 @@ class Category
         // Busco por ID
         $result = getElementById($dataArray, $id);
         if (!$result) {
-            echo "No se ha encontrado la categoría con con id: " . $id . "\n";
+            echo "No se ha encontrado la categoría con id: " . $id . "\n";
             return false;
         } else {
             unset($dataArray[$id]);
@@ -182,7 +182,7 @@ function validacionesDeCategoria($data)
     // Valido los datos insertados en body (formulario) y voy completando el array $arrayErrores con los errores que aparezcan
     $arrayErrores = array();
     if (empty($data["categoryId"])) {
-        $arrayErrores["categoryId"] = 'La ID de categoría es obligatoria';
+        $arrayErrores["categoryId"] = 'El ID de categoría es obligatoria';
     }
     if (empty($data["categoryName"])) {
         $arrayErrores["categoryName"] = 'El nombre de la categoría es obligatoria';

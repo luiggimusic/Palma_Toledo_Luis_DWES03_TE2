@@ -156,7 +156,7 @@ $router->add('/public/movementType/get', array(
 
 $router->add('/public/movementType/get/{id}', array(
     'controller' => 'MovementTypeController',
-    'action' => 'getMovementTypesById'
+    'action' => 'getMovementTypeById'
 ));
 
 $router->add('/public/movementType/create', array(

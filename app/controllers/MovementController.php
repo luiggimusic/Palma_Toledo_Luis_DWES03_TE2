@@ -1,5 +1,6 @@
 <?php
-class Movement
+
+class MovementController
 {
     function __construct() {}
 

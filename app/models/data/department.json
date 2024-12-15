@@ -33,15 +33,5 @@
         "id": 6,
         "departmenId": "SAL",
         "departmentName": "Sales"
-    },
-    {
-        "id": 7,
-        "departmenId": "PRU",
-        "departmentName": "Prueba"
-    },
-    {
-        "id": 8,
-        "departmenId": "ARM",
-        "departmentName": "PRUEBA"
     }
 ]

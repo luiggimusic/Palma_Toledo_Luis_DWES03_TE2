@@ -42,10 +42,10 @@ function existsObjectId($dataArray, $value, $key)
 }
 
 // Función para garantizar que no se duplique el ID. En el caso de User será el DNI
-function existeIdExcluyendo($dataArray, $idObjeto, $id)
+function existeIdExcluyendo($dataArray, $idObjeto, $id, $key)
 {
     foreach ($dataArray as $data) {
-        if ($data['departmenId'] === $idObjeto && $data['id'] !== $id) {
+        if (isset($data[$key]) && $data[$key] === $idObjeto && $data['id'] !== $id) {
             return true; // ID encontrado en otro en el array
         }
     }

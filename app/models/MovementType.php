@@ -2,19 +2,19 @@
 
 /** Definición del modelo con su tipo de dato e importo el fichero JSON
  **/
-class Department
+class MovementType
 {
     private int $id;
-    private string $departmenId;
-    private string $departmentName;
+    private string $movementId;
+    private string $movementName;
 
     // Constructor para inicializar propiedades
 
-    public function __construct(int $id, string $departmenId, string $departmentName)
+    public function __construct(int $id, string $movementId, string $movementName)
     {
         $this->id = $id;
-        $this->departmenId = $departmenId;
-        $this->departmentName = $departmentName;
+        $this->movementId = $movementId;
+        $this->movementName = $movementName;
     }
 
     // Getters
@@ -22,13 +22,13 @@ class Department
     {
         return $this->id;
     }
-    public function getDepartmentId()
+    public function getMovementId()
     {
-        return $this->departmenId;
+        return $this->movementId;
     }
-    public function getDepartmentName()
+    public function getMovementName()
     {
-        return $this->departmentName;
+        return $this->movementName;
     }
 
     // Setters
@@ -36,17 +36,17 @@ class Department
     {
         $this->id = $id;
     }
-    public function setDepartmentId($departmenId)
+    public function setMovementId($movementId)
     {
-        $this->departmenId = $departmenId;
+        $this->movementId = $movementId;
     }
-    public function setDepartmentName($departmentName)
+    public function setMovementName($movementName)
     {
-        $this->departmentName = $departmentName;
+        $this->movementName = $movementName;
     }
     private static function getFilePath()
     { // Por visualización he creado esta función decoficando el JSON y poder usarlo en las otras funciones
-        return __DIR__ . '/../models/data/department.json'; // Ruta del archivo JSON
+        return __DIR__ . '/../models/data/movementType.json'; // Ruta del archivo JSON
     }
 
     private static function datosJsonParseados()
@@ -67,7 +67,7 @@ class Department
         $dataArray = self::datosJsonParseados();
         $result = getElementById($dataArray, $id);
         if (!$result) {
-            echo "Departamento no encontrado";
+            echo "Tipo de movimiento no encontrado";
         } else {
             echo $result;
         };
@@ -77,10 +77,10 @@ class Department
     {
         $dataArray = self::datosJsonParseados();
 
-        $arrayErrores = validacionesDeDepartment($newData);
+        $arrayErrores = validacionesDeMovementType($newData);
 
-        if (existsObjectid($dataArray, $newData['departmenId'], 'departmenId')) {
-            $arrayErrores["departmenId"] = 'El ID de este departamento ya está registrado';
+        if (existsObjectid($dataArray, $newData['movementId'], 'movementId')) {
+            $arrayErrores["movementId"] = 'El ID de este tipo de movimiento ya está registrado';
         }
         if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta
             print_r($arrayErrores);
@@ -89,14 +89,14 @@ class Department
 
             // Creo un objeto de la clase y asigno los datos con setters
             $newElement = new self($newId, '', '', '', '', ''); // Inicializo el objeto con el nuevo ID
-            $newElement->setDepartmentId($newData['departmenId']);
-            $newElement->setDepartmentName($newData['departmentName']);
+            $newElement->setMovementId($newData['movementId']);
+            $newElement->setMovementName($newData['movementName']);
 
             // Convierto el objeto de la clase a un array para guardarlo en el JSON
             $dataArray[] = [
                 'id' => $newElement->getId(),
-                'departmenId' => $newElement->getDepartmentId(),
-                'departmentName' => $newElement->getDepartmentName(),
+                'movementId' => $newElement->getMovementId(),
+                'movementName' => $newElement->getMovementName(),
             ];
             // Guardo en el JSON
             $newJsonData = json_encode($dataArray, JSON_PRETTY_PRINT);
@@ -114,10 +114,10 @@ class Department
             //en el array dentro del bucle se apliquen al array original.
 
             if ($data['id'] === $id) {
-                $arrayErrores = validacionesDeDepartment($newData);
+                $arrayErrores = validacionesDeMovementType($newData);
 
-                if (existeIdExcluyendo($dataArray, $newData['departmenId'], $id, 'departmenId')) { // Evito que se duplique el Id de la clase
-                    $arrayErrores["departmenId"] = 'El ID ya está registrado';
+                if (existeIdExcluyendo($dataArray, $newData['movementId'], $id, 'movementId')) { // Evito que se duplique el Id de la clase
+                    $arrayErrores['movementId'] = 'El ID ya está registrado';
                 }
                 if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta
                     print_r($arrayErrores);
@@ -127,23 +127,23 @@ class Department
                 // Creo un objeto con los datos actuales
                 $element = new self(
                     $data['id'],
-                    $data['departmenId'],
-                    $data['departmentName'],
+                    $data['movementId'],
+                    $data['movementName'],
                 );
 
                 // Uso los setters para actualizar los datos
-                if (isset($newData['departmenId'])) {
-                    $element->setDepartmentId($newData['departmenId']);
+                if (isset($newData['movementId'])) {
+                    $element->setMovementId($newData['movementId']);
                 }
-                if (isset($newData['departmentName'])) {
-                    $element->setDepartmentName($newData['departmentName']);
+                if (isset($newData['movementName'])) {
+                    $element->setMovementName($newData['movementName']);
                 }
 
                 // Actualizo los datos en el array
                 $data = [
                     'id' => $element->getId(),
-                    'departmenId' => $element->getDepartmentId(),
-                    'departmentName' => $element->getDepartmentName(),
+                    'movementId' => $element->getMovementId(),
+                    'movementName' => $element->getMovementName(),
                 ];
                 $elementConfirmed  = true;
                 unset($data);
@@ -164,7 +164,7 @@ class Department
         // Busco por ID
         $result = getElementById($dataArray, $id);
         if (!$result) {
-            echo "No se ha encontrado el departamento con con id: " . $id . "\n";
+            echo "No se ha encontrado el tipo de movimiento con con id: " . $id . "\n";
             return false;
         } else {
             unset($dataArray[$id]);
@@ -177,15 +177,15 @@ class Department
 
 /*********** Funciones necesarias ***********/
 
-function validacionesDeDepartment($data)
+function validacionesDeMovementType($data)
 {
     // Valido los datos insertados en body (formulario) y voy completando el array $arrayErrores con los errores que aparezcan
     $arrayErrores = array();
-    if (empty($data["departmenId"])) {
-        $arrayErrores["departmenId"] = 'El ID de departamento es obligatorio';
+    if (empty($data["movementId"])) {
+        $arrayErrores["movementId"] = 'El ID del tipo de movimiento es obligatorio';
     }
-    if (empty($data["departmentName"])) {
-        $arrayErrores["departmentName"] = 'El nombre del departamento es obligatorio';
+    if (empty($data["movementName"])) {
+        $arrayErrores["movementName"] = 'El nombre del tipo de movimiento es obligatorio';
     }
     return $arrayErrores;
 }
