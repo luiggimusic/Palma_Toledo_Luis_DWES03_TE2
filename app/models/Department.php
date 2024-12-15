@@ -164,7 +164,7 @@ class Department
         // Busco por ID
         $result = getElementById($dataArray, $id);
         if (!$result) {
-            echo "No se ha encontrado el departamento con con id: " . $id . "\n";
+            echo "No se ha encontrado el departamento con id: " . $id . "\n";
             return false;
         } else {
             unset($dataArray[$id]);

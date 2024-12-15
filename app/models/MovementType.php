@@ -164,7 +164,7 @@ class MovementType
         // Busco por ID
         $result = getElementById($dataArray, $id);
         if (!$result) {
-            echo "No se ha encontrado el tipo de movimiento con con id: " . $id . "\n";
+            echo "No se ha encontrado el tipo de movimiento con id: " . $id . "\n";
             return false;
         } else {
             unset($dataArray[$id]);
