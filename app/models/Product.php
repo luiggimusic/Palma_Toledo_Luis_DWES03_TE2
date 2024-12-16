@@ -85,12 +85,12 @@ class Product
         $this->category = $category;
     }
 
-    private static function getFilePath()
+    public static function getFilePath()
     { // Por visualización he creado esta función decodificando el JSON y poder usarlo en las otras funciones
         return __DIR__ . '/../models/data/product.json'; // Ruta del archivo JSON
     }
 
-    private static function datosJsonParseados()
+    public static function datosJsonParseados() // Esta función es pública pues necesitaré estos datos en la clase Movement
     { // Por visualización he creado esta función decodificando el JSON y poder usarlo en las otras funciones
         return json_decode(self::getAll(), true);
     }

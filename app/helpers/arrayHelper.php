@@ -1,5 +1,4 @@
 <?php
-
     // Con esta función pretendo pasar el array de objetos y que devuelva el objeto si lo encuentra o null si no.
     function getElementById($dataArray,$id)
     {

@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-
+header('Content-Type: application/json'); // le indico al cliente que la respuesta es de tipo JSON.
 require_once '../app/models/Movement.php'; // cargo el modelo
 require_once '../app/helpers/arrayHelper.php'; // cargo el fichero con las funciones que me permitirán trabajar con los arrays
 
@@ -16,10 +16,26 @@ class MovementController
         print_r($dataArray);
     }
 
-    function getMovementByData($id)
+    function getMovementById($id)
     {
         Movement::getById($id);
+    }
 
+    function getMovementByData($data)
+    {
+        $movementData = [
+            'productCode' => $data['productCode'],
+            // 'productName' => $data["productName"],
+            'fromBatchNumber' => $data["fromBatchNumber"],
+            'toBatchNumber' => $data["toBatchNumber"],
+            'fromLocation' => $data["fromLocation"],
+            'toLocation' => $data["toLocation"],
+            'quantity' => $data["quantity"],
+            'movementId' => $data["movementId"],
+            'movementDate' => $data["movementDate"],
+        ];
+
+        Movement::getByData($movementData);
     }
 
     // POST

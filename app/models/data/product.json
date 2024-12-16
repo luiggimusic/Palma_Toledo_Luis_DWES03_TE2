@@ -79,5 +79,14 @@
         "location": "M220B",
         "quantity": 124,
         "category": "Raw material"
+    },
+    {
+        "id": 9,
+        "productCode": "FC1N0F2S1B-PXI",
+        "productName": "SEMIFINISHED PART P2141-S",
+        "batchNumber": "10000206",
+        "location": "M221",
+        "quantity": 33,
+        "category": "Raw material"
     }
 ]

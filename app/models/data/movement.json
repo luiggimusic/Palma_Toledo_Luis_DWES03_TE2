@@ -27,7 +27,7 @@
         "id": 2,
         "productCode": "FC1N0F2S1B-PXI",
         "productName": "SEMIFINISHED PART P2141-S",
-        "fromBatchNumber": "10000206",
+        "fromBatchNumber": "10000201",
         "toBatchNumber": "10000206",
         "fromLocation": "M221",
         "toLocation": "M221",
@@ -85,7 +85,7 @@
     },
     {
         "id": 7,
-        "productCode": "1716186-00-C-FAB",
+        "productCode": "1716186-00-P-FAB",
         "productName": "BALANCE RING, OUTLET, ROTOR,PM291",
         "fromBatchNumber": "20241202-201",
         "toBatchNumber": "20241202-201",
@@ -126,10 +126,10 @@
         "fromBatchNumber": "10000206",
         "toBatchNumber": "10000206",
         "fromLocation": "M221",
-        "toLocation": "M221",
-        "quantity": 1235,
+        "toLocation": "M222",
+        "quantity": 123,
         "movementId": "TR",
-        "movementDate": "04\/23\/2024"
+        "movementDate": "03\/23\/2024"
     },
     {
         "id": 11,
@@ -137,9 +137,9 @@
         "productName": "SEMIFINISHED PART P2141-S",
         "fromBatchNumber": "10000205",
         "toBatchNumber": "10000206",
-        "fromLocation": "M221",
+        "fromLocation": "M215",
         "toLocation": "M221",
-        "quantity": 1235,
+        "quantity": 145,
         "movementId": "TR",
         "movementDate": "04\/23\/2024"
     },
@@ -149,10 +149,46 @@
         "productName": "SEMIFINISHED PART P2141-S",
         "fromBatchNumber": "10000205",
         "toBatchNumber": "10000206",
+        "fromLocation": "M218",
+        "toLocation": "M221",
+        "quantity": 1235,
+        "movementId": "PU",
+        "movementDate": "05\/23\/2024"
+    },
+    {
+        "id": 13,
+        "productCode": "FC1N0F2S1B-PXI",
+        "productName": "SEMIFINISHED PART P2141-S",
+        "fromBatchNumber": "10000205",
+        "toBatchNumber": "10000210",
+        "fromLocation": "M221",
+        "toLocation": "M521",
+        "quantity": 28,
+        "movementId": "TR",
+        "movementDate": "12\/23\/2024"
+    },
+    {
+        "id": 14,
+        "productCode": "FC1N0F2S1B-PXI",
+        "productName": "SEMIFINISHED PART P2141-S",
+        "fromBatchNumber": "10000205",
+        "toBatchNumber": "10000210",
+        "fromLocation": "M221",
+        "toLocation": "M221",
+        "quantity": 125,
+        "movementId": "TR",
+        "movementDate": "12\/23\/2024"
+    },
+    {
+        "id": 15,
+        "productCode": "FC1N0F2S1B-PXI",
+        "productName": "SEMIFINISHED PART P2139-1-S",
+        "fromBatchNumber": "1000020",
+        "toBatchNumber": "10000210",
         "fromLocation": "M221",
         "toLocation": "M221",
         "quantity": 1235,
         "movementId": "TR",
-        "movementDate": "04\/23\/2024"
+        "movementDate": "12\/23\/2024"
     }
 ]

@@ -127,6 +127,10 @@ $router->add('/public/movement/get', array(
 
 $router->add('/public/movement/get/{id}', array(
     'controller' => 'MovementController',
+    'action' => 'getMovementById'
+));
+$router->add('/public/movement/get/filtered', array(
+    'controller' => 'MovementController',
     'action' => 'getMovementByData'
 ));
 
