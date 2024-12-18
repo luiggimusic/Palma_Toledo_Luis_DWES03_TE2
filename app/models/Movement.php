@@ -14,6 +14,8 @@ class Movement
     private int $quantity;
     private string $movementId;
     private string $movementDate;
+    private string $customer;
+    private string $supplier;
 
     // Constructor para inicializar propiedades
 
@@ -27,7 +29,9 @@ class Movement
         string $toLocation,
         int $quantity,
         string $movementId,
-        string $movementDate
+        string $movementDate,
+        string $customer,
+        string $supplier,
     ) {
         $this->id = $id;
         $this->productCode = $productCode;
@@ -38,7 +42,9 @@ class Movement
         $this->toLocation = $toLocation;
         $this->quantity = $quantity;
         $this->movementId = $movementId;
-        $this->$movementDate = $movementDate;
+        $this->movementDate = $movementDate;
+        $this->customer = $customer;
+        $this->supplier = $supplier;
     }
 
     // Getters
@@ -82,6 +88,14 @@ class Movement
     {
         return $this->movementDate;
     }
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+    public function getSupplier()
+    {
+        return $this->supplier;
+    }
 
     // Setters
     public function setId($id)
@@ -123,6 +137,14 @@ class Movement
     public function setMovementDate($movementDate)
     {
         $this->movementDate = $movementDate;
+    }
+    public function setCustomer($customer)
+    {
+        $this->customer = $customer;
+    }
+    public function setSupplier($supplier)
+    {
+        $this->supplier = $supplier;
     }
 
     public static function getFilePath()
@@ -203,8 +225,18 @@ class Movement
                 (isset($item['movementDate'], $data['movementDate']) &&
                     $item['movementDate'] === $data['movementDate']);
 
+            $matchCustomer = !isset($data['customer']) ||
+                $data['customer'] === '' ||
+                (isset($item['customer'], $data['customer']) &&
+                    $item['customer'] === $data['customer']);
+
+            $matchSupplier = !isset($data['supplier']) ||
+                $data['supplier'] === '' ||
+                (isset($item['supplier'], $data['supplier']) &&
+                    $item['supplier'] === $data['supplier']);
+
             return $matchProductCode && $matchMovementId && $matchFromBatchNumber && $matchToBatchNumber && $matchFromLocation
-                && $matchToLocation &&  $matchQuantity &&  $matchMovementDate;
+                && $matchToLocation &&  $matchQuantity &&  $matchMovementDate &&  $matchCustomer && $matchSupplier;
         });
 
         if (empty($filteredData)) {
@@ -219,80 +251,118 @@ class Movement
         echo $result;
     }
 
-    public static function create($newData)
+    public static function sale($newData)
     {
         $movementDataArray = self::datosJsonParseados();
         $productsDataArray = Product::datosJsonParseados();
 
+        // Convierto array asociativo a array de objetos Product
+        $productObjectsArray = Product::arrayToObjectsArray($productsDataArray);
 
-        // Convertir arrays a objetos Product
-        $productObjectsArray = [];
-        foreach ($productsDataArray as $productData) {
-            $productObjectsArray[] = new Product(
-                $productData['id'],
-                $productData['productCode'],
-                $productData['productName'],
-                $productData['batchNumber'],
-                $productData['location'],
-                $productData['quantity'],
-                $productData['category']
-            );
+        $arrayErrores = validacionesDeSale($newData); // Valido los campos obligatorios
+
+        if (!existsObjectId($productsDataArray, $newData['productCode'], 'productCode')) { // Verifico si el producto está registrado en product.json
+            $arrayErrores["productCode"] = 'El producto no está registrado';
         }
+        if (count($arrayErrores) > 0) {
 
+            print_r($arrayErrores);
+        } else {
+            // Verifico que exista stock exactamente en la ubicación que se indica
+            foreach ($productObjectsArray as $product) {
+                if ($product->getProductCode() === $newData['productCode']) {
+                    if (
+                        $product->getBatchNumber() !== $newData['fromBatchNumber']
+                        || $product->getLocation() !== $newData['fromLocation']
+                    ) {
+                        $arrayErrores['error'] = "No hay stock de este producto en la ubicación y lote indicados";
+                        print_r($arrayErrores);
+                        break;
+                    }
+                }
 
-        // Verifico que exista stock exactamente en la ubicación que se indica
-        foreach ($productObjectsArray as $product) {
-            if (
+                if (
+                    $product->getProductCode() === $newData['productCode']
+                    && $product->getBatchNumber() === $newData['fromBatchNumber']
+                    && $product->getLocation() === $newData['fromLocation']
+                ) {
+                    // Valido si hay suficiente cantidad
+                    if ($product->getQuantity() < $newData['quantity']) {
 
-                $product->getProductCode() === $newData['productCode']
-                && $product->getBatchNumber() === $newData['fromBatchNumber']
-                && $product->getLocation() === $newData['fromLocation']
-            ) {
-                // Validar si hay suficiente cantidad
-                if ($product->getQuantity() >= $newData['quantity']) {
-                    // Restar la cantidad solicitada
-                    $newQuantity = $product->getQuantity() - $newData['quantity'];
-                    $product->setQuantity($newQuantity);
+                        $arrayErrores['quantity'] = 'No hay stock suficiente para esta venta';
+                        print_r($arrayErrores);
+                        break; // Salgo del bucle si hay un error
 
-                    var_dump($product->getQuantity());
+                    } else {
+                        // Resto la cantidad solicitada a ese elemento
+                        $newQuantity = $product->getQuantity() - $newData['quantity'];
+                        $product->setQuantity($newQuantity);
 
-                    $success['quantity'] = 'Stock actualizado correctamente';
-                } else {
-                    // Error: stock insuficiente
-                    $arrayErrores['quantity'] = 'No hay stock suficiente para mover';
-                    break; // Salimos del bucle si hay un error
+                        // Convierto array de objetos a array asociativo 
+                        $productsDataArrayUpdated = Product::objectsArrayToArray($productObjectsArray);
+
+                        $newId = nextId($movementDataArray); // Llamo a la función nextId para asignarle un id correcto al nuevo objeto
+
+                        // Creo un objeto de la clase y asigno los datos con setters
+                        $newElement = new self($newId, '', '', '', '', '', '', 0, '', '', '', ''); // Inicializo el objeto con el nuevo ID
+                        $newElement->setProductCode($newData['productCode']);
+                        $newElement->setProductName($newData['productName']);
+                        $newElement->setFromBatchNumber($newData['fromBatchNumber']);
+                        $newElement->setToBatchNumber($newData['toBatchNumber']);
+                        $newElement->setFromLocation($newData['fromLocation']);
+                        $newElement->setToLocation($newData['toLocation']);
+                        $newElement->setQuantity($newData['quantity']);
+                        $newElement->setMovementId($newData['movementId']);
+                        $newElement->setMovementDate($newData['movementDate']);
+                        $newElement->setCustomer($newData['customer']);
+                        $newElement->setSupplier($newData['supplier']);
+
+                        // Convierto el objeto de la clase a un array para guardarlo en el JSON
+                        $movementDataArray[] = [
+                            'id' => $newElement->getId(),
+                            'productCode' => $newElement->getProductCode(),
+                            'productName' => $newElement->getProductName(),
+                            'fromBatchNumber' => $newElement->getFromBatchNumber(),
+                            'toBatchNumber' => $newElement->getToBatchNumber(),
+                            'fromLocation' => $newElement->getFromLocation(),
+                            'toLocation' => $newElement->getToLocation(),
+                            'quantity' => $newElement->getQuantity(),
+                            'movementId' => $newElement->getMovementId(),
+                            'movementDate' => $newElement->getMovementDate(),
+                            'customer' => $newElement->getCustomer(),
+                            'supplier' => $newElement->getSupplier(),
+                        ];
+
+                        // Llamo a la función
+                        saveData($movementDataArray, $productsDataArrayUpdated);
+                        return true;
+                    }
                 }
             }
         }
+    }
 
-        var_dump($productObjectsArray);
+    public static function purchase($newData)
+    {
+        $movementDataArray = self::datosJsonParseados();
+        $productsDataArray = Product::datosJsonParseados();
 
+        // Convierto array asociativo a array de objetos Product
+        $productObjectsArray = Product::arrayToObjectsArray($productsDataArray);
 
+        $arrayErrores = validacionesDePurchase($newData); // Valido los campos obligatorios
 
-
-        $arrayErrores = validacionesDeMovement($newData);
-
-        if (!existsObjectId($productsDataArray, $newData['productCode'], 'productCode')) { // Verifica si el producto está registrado en product.json
+        if (!existsObjectId($productsDataArray, $newData['productCode'], 'productCode')) { // Verifico si el producto está registrado en product.json
             $arrayErrores["productCode"] = 'El producto no está registrado';
         }
-
-
-
-
-
-
-
-
-
-
-
-        if (count($arrayErrores) > 0) { // Si el array de errores es mayor que 0, entonces  creo un array asociativo que mostrará la respuesta
+        if (count($arrayErrores) > 0) {
             print_r($arrayErrores);
         } else {
+
             $newId = nextId($movementDataArray); // Llamo a la función nextId para asignarle un id correcto al nuevo objeto
 
             // Creo un objeto de la clase y asigno los datos con setters
-            $newElement = new self($newId, '', '', '', '', '', '', 0, '', ''); // Inicializo el objeto con el nuevo ID
+            $newElement = new self($newId, '', '', '', '', '', '', 0, '', '', '', ''); // Inicializo el objeto con el nuevo ID
             $newElement->setProductCode($newData['productCode']);
             $newElement->setProductName($newData['productName']);
             $newElement->setFromBatchNumber($newData['fromBatchNumber']);
@@ -302,6 +372,8 @@ class Movement
             $newElement->setQuantity($newData['quantity']);
             $newElement->setMovementId($newData['movementId']);
             $newElement->setMovementDate($newData['movementDate']);
+            $newElement->setCustomer($newData['customer']);
+            $newElement->setSupplier($newData['supplier']);
 
             // Convierto el objeto de la clase a un array para guardarlo en el JSON
             $movementDataArray[] = [
@@ -315,96 +387,243 @@ class Movement
                 'quantity' => $newElement->getQuantity(),
                 'movementId' => $newElement->getMovementId(),
                 'movementDate' => $newElement->getMovementDate(),
+                'customer' => $newElement->getCustomer(),
+                'supplier' => $newElement->getSupplier(),
             ];
+        }
 
+        // Verifico que no exista stock exactamente en la ubicación que se indica para crear una nueva línea para ese producto
+        foreach ($productObjectsArray as $product) {
+            if ($product->getProductCode() === $newData['productCode']) {
+                if (
+                    $product->getBatchNumber() !== $newData['toBatchNumber']
+                    || $product->getLocation() !== $newData['toLocation']
+                ) {
 
+                    $newId = nextId($productsDataArray); // Llamo a la función nextId para asignarle un id correcto al nuevo objeto
 
+                    // Creo un objeto de la clase y asigno los datos con setters
+                    $newElement = new Product($newId, '', '', '', '', 0, ''); // Inicializo el objeto con el nuevo ID
+                    $newElement->setProductCode($newData['productCode']);
+                    $newElement->setProductName($newData['productName']);
+                    $newElement->setBatchNumber($newData['toBatchNumber']);
+                    $newElement->setLocation($newData['toLocation']);
+                    $newElement->setQuantity($newData['quantity']);
+                    $newElement->setCategory("");
 
-            // Convertir array de objetos a array asociativo 
-            // $productsDataArray = []; 
-            foreach ($productObjectsArray as $product) {
-                $productsDataArrayUpdated[] = [
-                    'id' => $product->getId(),
-                    'productCode' => $product->getProductCode(),
-                    'productName' => $product->getProductName(),
-                    'batchNumber' => $product->getBatchNumber(),
-                    'location' => $product->getLocation(),
-                    'quantity' => $product->getQuantity(),
-                    'category' => $product->getCategory()
-                ];
+                    $productObjectsArray[] = $newElement;
+                }
+
+                if (
+                    $product->getProductCode() === $newData['productCode']
+                    && $product->getBatchNumber() === $newData['toBatchNumber']
+                    && $product->getLocation() === $newData['toLocation']
+                ) {
+                    // Sumo la cantidad que entra en caso que exista stock de el mismo código, lote y ubicación
+                    $newQuantity = $product->getQuantity() + $newData['quantity'];
+                    $product->setQuantity($newQuantity);
+
+                    // Convierto array de objetos a array asociativo 
+                    $productsDataArrayUpdated = Product::objectsArrayToArray($productObjectsArray);
+                }
+                // Convierto array de objetos a array asociativo 
+                $productsDataArrayUpdated = Product::objectsArrayToArray($productObjectsArray);
+                // Llamo a la función
+                saveData($movementDataArray, $productsDataArrayUpdated);
+                return true;
             }
-
-
-
-            // Ejemplo de llamada a la función
-            $results = self::saveData($movementDataArray, $productsDataArrayUpdated);
-            if ($results['movementsSaved'] && $results['productSaved']) {
-                echo "Datos guardados correctamente.";
-            } else {
-                echo "Error al guardar los datos.";
-            }
-
-
-
-            // // Guardo en el JSON de movimientos
-            // $newJsonDataMovements = json_encode($dataArray, JSON_PRETTY_PRINT);
-            // return file_put_contents(self::getFilePath(), $newJsonDataMovements) !== false;
-
-
-
-            // // Guardo en el JSON de producto
-            // $newJsonDataProduct = json_encode($productsDataArray, JSON_PRETTY_PRINT);
-            // return file_put_contents(Product::getFilePath(), $newJsonDataProduct) !== false;
         }
     }
 
-
-
-
-
-
-    public static function saveData($movementDataArray, $productsDataArray)
+    public static function inventoryTransfer($newData)
     {
-        // Guardar en el JSON de movimientos
-        $newJsonDataMovements = json_encode($movementDataArray, JSON_PRETTY_PRINT);
-        $resultMovements = file_put_contents(self::getFilePath(), $newJsonDataMovements) !== false;
-        var_dump($resultMovements);
+        $movementDataArray = self::datosJsonParseados();
+        $productsDataArray = Product::datosJsonParseados();
 
-        // Guardar en el JSON de producto
-        $newJsonDataProduct = json_encode($productsDataArray, JSON_PRETTY_PRINT);
-        $resultProduct = file_put_contents(Product::getFilePath(), $newJsonDataProduct) !== false;
+        // Convierto array asociativo a array de objetos Product
+        $productObjectsArray = Product::arrayToObjectsArray($productsDataArray);
 
+        $arrayErrores = validacionesDeInventoryTransfer($newData); // Valido los campos obligatorios
 
-        // Devolver resultados de ambas operaciones
-        return [
-            'movementsSaved' => $resultMovements,
-            'productSaved' => $resultProduct
-        ];
+        if (!existsObjectId($productsDataArray, $newData['productCode'], 'productCode')) { // Verifico si el producto está registrado en product.json
+            $arrayErrores["productCode"] = 'El producto no está registrado';
+        }
+        if (count($arrayErrores) > 0) {
+
+            print_r($arrayErrores);
+        } else {
+            // Verifico que exista stock exactamente en la ubicación que se indica para descontar
+            foreach ($productObjectsArray as $product) {
+                if ($product->getProductCode() === $newData['productCode']) {
+                    if (
+                        $product->getBatchNumber() !== $newData['fromBatchNumber']
+                        || $product->getLocation() !== $newData['fromLocation']
+                    ) {
+                        $arrayErrores['error'] = "No hay stock de este producto en la ubicación y lote indicados";
+                        print_r($arrayErrores);
+                        break;
+                    }
+                }
+                if (
+                    $product->getProductCode() === $newData['productCode']
+                    && $product->getBatchNumber() === $newData['fromBatchNumber']
+                    && $product->getLocation() === $newData['fromLocation']
+                ) {
+                    // Valido si hay suficiente cantidad
+                    if ($product->getQuantity() < $newData['quantity']) {
+
+                        $arrayErrores['quantity'] = 'No hay stock suficiente para esta transferencia';
+                        print_r($arrayErrores);
+                        break;
+                    } else {
+                        // Resto la cantidad solicitada a ese elemento
+                        $newQuantity = $product->getQuantity() - $newData['quantity'];
+                        $product->setQuantity($newQuantity);
+
+                        $newId = nextId($movementDataArray); // Llamo a la función nextId para asignarle un id correcto al nuevo objeto
+
+                        // Creo un objeto de la clase y asigno los datos con setters
+                        $newElement = new self($newId, '', '', '', '', '', '', 0, '', '', '', ''); // Inicializo el objeto con el nuevo ID
+                        $newElement->setProductCode($newData['productCode']);
+                        $newElement->setProductName($newData['productName']);
+                        $newElement->setFromBatchNumber($newData['fromBatchNumber']);
+                        $newElement->setToBatchNumber($newData['toBatchNumber']);
+                        $newElement->setFromLocation($newData['fromLocation']);
+                        $newElement->setToLocation($newData['toLocation']);
+                        $newElement->setQuantity($newData['quantity']);
+                        $newElement->setMovementId($newData['movementId']);
+                        $newElement->setMovementDate($newData['movementDate']);
+                        $newElement->setCustomer($newData['customer']);
+                        $newElement->setSupplier($newData['supplier']);
+
+                        // Convierto el objeto de la clase a un array para guardarlo en el JSON
+                        $movementDataArray[] = [
+                            'id' => $newElement->getId(),
+                            'productCode' => $newElement->getProductCode(),
+                            'productName' => $newElement->getProductName(),
+                            'fromBatchNumber' => $newElement->getFromBatchNumber(),
+                            'toBatchNumber' => $newElement->getToBatchNumber(),
+                            'fromLocation' => $newElement->getFromLocation(),
+                            'toLocation' => $newElement->getToLocation(),
+                            'quantity' => $newElement->getQuantity(),
+                            'movementId' => $newElement->getMovementId(),
+                            'movementDate' => $newElement->getMovementDate(),
+                            'customer' => $newElement->getCustomer(),
+                            'supplier' => $newElement->getSupplier(),
+                        ];
+                    }
+
+                    // Verifico que no exista stock exactamente en la ubicación que se indica para crear una nueva línea para ese producto
+                    foreach ($productObjectsArray as $product) {
+                        if ($product->getProductCode() === $newData['productCode']) {
+                            if (
+                                $product->getBatchNumber() !== $newData['toBatchNumber']
+                                || $product->getLocation() !== $newData['toLocation']
+                            ) {
+
+                                $newId = nextId($productsDataArray); // Llamo a la función nextId para asignarle un id correcto al nuevo objeto
+
+                                // Creo un objeto de la clase y asigno los datos con setters
+                                $newElement = new Product($newId, '', '', '', '', 0, ''); // Inicializo el objeto con el nuevo ID
+                                $newElement->setProductCode($newData['productCode']);
+                                $newElement->setProductName($newData['productName']);
+                                $newElement->setBatchNumber($newData['toBatchNumber']);
+                                $newElement->setLocation($newData['toLocation']);
+                                $newElement->setQuantity($newData['quantity']);
+                                $newElement->setCategory("");
+
+                                $productObjectsArray[] = $newElement;
+                            }
+
+                            if (
+                                $product->getProductCode() === $newData['productCode']
+                                && $product->getBatchNumber() === $newData['toBatchNumber']
+                                && $product->getLocation() === $newData['toLocation']
+                            ) {
+                                // Sumo la cantidad que entra en caso que exista stock de el mismo código, lote y ubicación
+                                $newQuantity = $product->getQuantity() + $newData['quantity'];
+                                $product->setQuantity($newQuantity);
+                            }
+                        }
+                    }
+                }
+            }
+            // Convierto array de objetos a array asociativo 
+            $productsDataArrayUpdated = Product::objectsArrayToArray($productObjectsArray);
+
+            // Llamo a la función
+            saveData($movementDataArray, $productsDataArrayUpdated);
+            return true;
+        }
     }
 }
 
 /*********** Funciones necesarias ***********/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function validacionesDeMovement($data)
+function validacionesDeSale($data)
 {
     // Valido los datos insertados en body (formulario) y voy completando el array $arrayErrores con los errores que aparezcan
-    // En el caso de producto, fromBatchNumber, location y quantity pueden estar vacíos; especialmente cuando se trata de un producto nuevo
+    $arrayErrores = array();
+    if (empty($data["productCode"])) {
+        $arrayErrores["productCode"] = 'El Código del producto es obligatorio';
+    }
+    if (empty($data["productName"])) {
+        $arrayErrores["productName"] = 'El nombre del producto es obligatorio';
+    }
+    if (empty($data["fromBatchNumber"])) {
+        $arrayErrores["fromBatchNumber"] = 'El lote de origen es obligatorio';
+    }
+    if (empty($data["fromLocation"])) {
+        $arrayErrores["fromLocation"] = 'La ubicación de origen es obligatoria';
+    }
+    if (empty($data["quantity"])) {
+        $arrayErrores["quantity"] = 'La cantidad es obligatoria';
+    }
+    if (empty($data["movementId"])) {
+        $arrayErrores["movementId"] = 'El tipo de movimiento es obligatorio';
+    }
+    if (empty($data["movementDate"])) {
+        $arrayErrores["movementDate"] = 'La fecha del movimiento es obligatoria';
+    }
+    if (empty($data["customer"])) {
+        $arrayErrores["customer"] = 'El cliente es obligatorio';
+    }
+    return $arrayErrores;
+}
+
+function validacionesDePurchase($data)
+{
+    // Valido los datos insertados en body (formulario) y voy completando el array $arrayErrores con los errores que aparezcan
+    $arrayErrores = array();
+    if (empty($data["productCode"])) {
+        $arrayErrores["productCode"] = 'El Código del producto es obligatorio';
+    }
+    if (empty($data["productName"])) {
+        $arrayErrores["productName"] = 'El nombre del producto es obligatorio';
+    }
+    if (empty($data["toBatchNumber"])) {
+        $arrayErrores["toBatchNumber"] = 'El lote de destino es obligatorio';
+    }
+    if (empty($data["toLocation"])) {
+        $arrayErrores["toLocation"] = 'La ubicación de destino es obligatoria';
+    }
+    if (empty($data["quantity"])) {
+        $arrayErrores["quantity"] = 'La cantidad es obligatoria';
+    }
+    if (empty($data["movementId"])) {
+        $arrayErrores["movementId"] = 'El tipo de movimiento es obligatorio';
+    }
+    if (empty($data["movementDate"])) {
+        $arrayErrores["movementDate"] = 'La fecha del movimiento es obligatoria';
+    }
+    if (empty($data["supplier"])) {
+        $arrayErrores["supplier"] = 'El proveedor es obligatorio';
+    }
+    return $arrayErrores;
+}
+
+function validacionesDeInventoryTransfer($data)
+{
+    // Valido los datos insertados en body (formulario) y voy completando el array $arrayErrores con los errores que aparezcan
     $arrayErrores = array();
     if (empty($data["productCode"])) {
         $arrayErrores["productCode"] = 'El Código del producto es obligatorio';
@@ -433,5 +652,46 @@ function validacionesDeMovement($data)
     if (empty($data["movementDate"])) {
         $arrayErrores["movementDate"] = 'La fecha del movimiento es obligatoria';
     }
+
     return $arrayErrores;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Con la función saveData actualizo los ficheros movement.json y product.json cada vez que se realizan cambios
+function saveData($movementDataArray, $productsDataArray)
+{
+    // Guardar en el JSON de movimientos
+    $newJsonDataMovements = json_encode($movementDataArray, JSON_PRETTY_PRINT);
+    $resultMovements = file_put_contents(Movement::getFilePath(), $newJsonDataMovements) !== false;
+
+    // Guardar en el JSON de producto
+    $newJsonDataProduct = json_encode($productsDataArray, JSON_PRETTY_PRINT);
+    $resultProduct = file_put_contents(Product::getFilePath(), $newJsonDataProduct) !== false;
+
+
+    // Devolver resultados de ambas operaciones
+    return [
+        'movementsSaved' => $resultMovements,
+        'productSaved' => $resultProduct
+    ];
 }

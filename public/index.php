@@ -134,9 +134,17 @@ $router->add('/public/movement/get/filtered', array(
     'action' => 'getMovementByData'
 ));
 
-$router->add('/public/movement/create', array(
+$router->add('/public/movement/sale', array(
     'controller' => 'MovementController',
-    'action' => 'create'
+    'action' => 'sale'
+));
+$router->add('/public/movement/purchase', array(
+    'controller' => 'MovementController',
+    'action' => 'purchase'
+));
+$router->add('/public/movement/inventoryTransfer', array(
+    'controller' => 'MovementController',
+    'action' => 'inventoryTransfer'
 ));
 
 /***************************** Movement type ****************************/

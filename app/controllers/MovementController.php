@@ -33,13 +33,15 @@ class MovementController
             'quantity' => $data["quantity"],
             'movementId' => $data["movementId"],
             'movementDate' => $data["movementDate"],
+            'customer' => $data["customer"],
+            'supplier' => $data["supplier"],
         ];
 
         Movement::getByData($movementData);
     }
 
     // POST
-    function create($data)
+    function sale($data)
     {
         $movementData = [
             'productCode' => $data["productCode"],
@@ -51,10 +53,12 @@ class MovementController
             'quantity' => $data["quantity"],
             'movementId' => $data["movementId"],
             'movementDate' => $data["movementDate"],
+            'customer' => $data["customer"],
+            'supplier' => $data["supplier"],
         ];
 
         // Llamo al método estático "create"
-        $success = Movement::create($movementData);
+        $success = Movement::sale($movementData);
 
         if ($success) {
             echo "Movimiento registrado correctamente";
@@ -62,4 +66,58 @@ class MovementController
             echo "No se ha registrado el movimiento";
         }
     }
+
+    function purchase($data)
+    {
+        $movementData = [
+            'productCode' => $data["productCode"],
+            'productName' => $data["productName"],
+            'fromBatchNumber' => $data["fromBatchNumber"],
+            'toBatchNumber' => $data["toBatchNumber"],
+            'fromLocation' => $data["fromLocation"],
+            'toLocation' => $data["toLocation"],
+            'quantity' => $data["quantity"],
+            'movementId' => $data["movementId"],
+            'movementDate' => $data["movementDate"],
+            'customer' => $data["customer"],
+            'supplier' => $data["supplier"],
+        ];
+    
+        // Llamo al método estático "purchase"
+        $success = Movement::purchase($movementData);
+    
+        if ($success) {
+            echo "Movimiento registrado correctamente";
+        } else {
+            echo "No se ha registrado el movimiento";
+        }
+    }
+
+    function inventoryTransfer($data)
+    {
+        $movementData = [
+            'productCode' => $data["productCode"],
+            'productName' => $data["productName"],
+            'fromBatchNumber' => $data["fromBatchNumber"],
+            'toBatchNumber' => $data["toBatchNumber"],
+            'fromLocation' => $data["fromLocation"],
+            'toLocation' => $data["toLocation"],
+            'quantity' => $data["quantity"],
+            'movementId' => $data["movementId"],
+            'movementDate' => $data["movementDate"],
+            'customer' => $data["customer"],
+            'supplier' => $data["supplier"],
+        ];
+    
+        // Llamo al método estático "inventoryTransfer"
+        $success = Movement::inventoryTransfer($movementData);
+    
+        if ($success) {
+            echo "Movimiento registrado correctamente";
+        } else {
+            echo "No se ha registrado el movimiento";
+        }
+    }
 }
+
+

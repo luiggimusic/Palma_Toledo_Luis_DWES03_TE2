@@ -242,6 +242,41 @@ class Product
             return true;
         };
     }
+
+
+    // Convierto array de objetos a array asociativo de producto
+    public static function objectsArrayToArray($objectsArray)
+    {
+        foreach ($objectsArray as $product) {
+            $productsDataArrayUpdated[] = [
+                'id' => $product->getId(),
+                'productCode' => $product->getProductCode(),
+                'productName' => $product->getProductName(),
+                'batchNumber' => $product->getBatchNumber(),
+                'location' => $product->getLocation(),
+                'quantity' => $product->getQuantity(),
+                'category' => $product->getCategory()
+            ];
+        }
+        return $productsDataArrayUpdated;
+    }
+
+    // Convierto array asociativo a array de objetos Product
+    public static function arrayToObjectsArray($productsDataArray)
+    {
+        foreach ($productsDataArray as $productData) {
+            $productObjectsArray[] = new Product(
+                $productData['id'],
+                $productData['productCode'],
+                $productData['productName'],
+                $productData['batchNumber'],
+                $productData['location'],
+                $productData['quantity'],
+                $productData['category']
+            );
+        }
+        return $productObjectsArray;
+    }
 }
 
 /*********** Funciones necesarias ***********/
