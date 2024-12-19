@@ -65,12 +65,7 @@ class Category
     public static function getById($id)
     {
         $dataArray = self::datosJsonParseados();
-        $result = getElementById($dataArray, $id);
-        if (!$result) {
-            echo "Categoría no encontrada";
-        } else {
-            echo $result;
-        };
+        return getElementById($dataArray, $id);
     }
 
     public static function create($newData)

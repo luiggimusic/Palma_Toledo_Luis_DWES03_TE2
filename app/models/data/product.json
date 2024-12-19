@@ -81,12 +81,21 @@
         "category": "Raw material"
     },
     {
+        "id": 9,
+        "productCode": "Prueba",
+        "productName": "Prueba",
+        "batchNumber": "Prueba",
+        "location": "Prueba",
+        "quantity": 41,
+        "category": "Prueba"
+    },
+    {
         "id": 10,
         "productCode": "FC1N0F2S1B-PXI",
         "productName": "SEMIFINISHED PART P2141-S",
         "batchNumber": "10000206",
         "location": "M221",
-        "quantity": 1268,
+        "quantity": 33,
         "category": "Raw material"
     },
     {
@@ -95,7 +104,7 @@
         "productName": "BALANCE RING, OUTLET, ROTOR,PM291",
         "batchNumber": "10000254",
         "location": "M215",
-        "quantity": 10,
+        "quantity": 500,
         "category": "Finished part"
     },
     {
@@ -106,23 +115,5 @@
         "location": "M221",
         "quantity": 33,
         "category": "Raw material"
-    },
-    {
-        "id": 13,
-        "productCode": "FC1N0F2S1B-PXI",
-        "productName": "SEMIFINISHED PART P2141-S",
-        "batchNumber": "100002099996",
-        "location": "M221",
-        "quantity": 1235,
-        "category": ""
-    },
-    {
-        "id": 14,
-        "productCode": "1716186-00-P-FAB",
-        "productName": "BALANCE RING, OUTLET, ROTOR,PM291",
-        "batchNumber": "10000255",
-        "location": "M897",
-        "quantity": 10,
-        "category": ""
     }
 ]

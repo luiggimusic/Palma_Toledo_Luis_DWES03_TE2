@@ -19,7 +19,13 @@ class DepartmentController
 
     function getDepartmentById($id)
     {
-        Department::getById($id);
+        $success = Department::getById($id);
+        if ($success) {
+            echo "Status Code: 200 OK\nRegistro encontrado \n";
+            print_r($success);
+        } else {
+            echo "Status Code: 409 Conflict\nNo se ha encontrado el departamento";
+        }
     }
 
     // POST
@@ -34,9 +40,9 @@ class DepartmentController
         $success = Department::create($departmentData);
 
         if ($success) {
-            echo "Departamento creado correctamente";
+            echo "Status Code: 200 OK\nDepartamento creado correctamente";
         } else {
-            echo "No se ha creado el departamento";
+            echo "Status Code: 409 Conflict\nNo se ha creado el departamento";
         }
     }
 
@@ -52,9 +58,9 @@ class DepartmentController
         $success = Department::update($id, $data);
 
         if ($success) {
-            echo "Departamento actualizado correctamente";
+            echo "Status Code: 200 OK\nDepartamento actualizado correctamente";
         } else {
-            echo "Error al actualizar";
+            echo "Status Code: 409 Conflict\nError al actualizar";
         }
     }
 
@@ -64,9 +70,9 @@ class DepartmentController
         $success = Department::delete($id);
 
         if ($success) {
-            echo "Departamento eliminado";
+            echo "Status Code: 200 OK\nDepartamento eliminado";
         } else {
-            echo "Error al eliminar";
+            echo "Status Code: 409 Conflict\nError al eliminar";
         }
     }
 }

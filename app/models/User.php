@@ -98,12 +98,7 @@ class User
     public static function getById($id)
     {
         $usersArray = self::datosJsonParseados();
-        $result = getElementById($usersArray, $id);
-        if (!$result) {
-            echo "Usuario no encontrado";
-        } else {
-            echo $result;
-        };
+        return getElementById($usersArray, $id);
     }
 
     public static function create($userData)

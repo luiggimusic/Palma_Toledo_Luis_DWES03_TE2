@@ -16,7 +16,13 @@ class UserController
 
     function getUserById($id)
     {
-        User::getById($id);
+        $success = User::getById($id);
+        if ($success) {
+            echo "Status Code: 200 OK\nUsuario encontrado\n";
+            print_r($success);
+        } else {
+            echo "Status Code: 409 Conflict\nNo se ha encontrado el usuario";
+        }
     }
 
     // POST
@@ -34,9 +40,9 @@ class UserController
         $success = User::create($userData);
 
         if ($success) {
-            echo "Usuario creado correctamente";
+            echo "Status Code: 200 OK\nUsuario creado correctamente";
         } else {
-            echo "No se ha creado el usuario";
+            echo "Status Code: 409 Conflict\nNo se ha creado el usuario";
         }
     }
 
@@ -56,9 +62,9 @@ class UserController
         $success = User::update($id, $userData);
 
         if ($success) {
-            echo "Usuario actualizado correctamente";
+            echo "Status Code: 200 OK\nUsuario actualizado correctamente";
         } else {
-            echo "Error al actualizar";
+            echo "Status Code: 409 Conflict\nError al actualizar";
         }
     }
 
@@ -68,9 +74,9 @@ class UserController
         $success = User::delete($id);
 
         if ($success) {
-            echo "Usuario eliminado";
+            echo "Status Code: 200 OK\nUsuario eliminado";
         } else {
-            echo "Error al eliminar";
+            echo "Status Code: 409 Conflict\nError al eliminar";
         }
     }
 }

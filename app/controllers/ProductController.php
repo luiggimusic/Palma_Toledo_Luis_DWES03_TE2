@@ -19,7 +19,13 @@ class ProductController
 
     function getProductById($id)
     {
-        Product::getById($id);
+        $success = Product::getById($id);
+        if ($success) {
+            echo "Status Code: 200 OK\nRegistro encontrado \n";
+            print_r($success);
+        } else {
+            echo "Status Code: 409 Conflict\nNo se ha encontrado la categoría";
+        }
     }
 
     // POST
@@ -38,9 +44,9 @@ class ProductController
         $success = Product::create($productData);
 
         if ($success) {
-            echo "Producto creado correctamente";
+            echo "Status Code: 200 OK\nProducto creado correctamente";
         } else {
-            echo "No se ha creado el producto";
+            echo "Status Code: 409 Conflict\nNo se ha creado el producto";
         }
     }
 
@@ -63,18 +69,18 @@ class ProductController
         $success = Product::update($id, $data);
 
         if ($success) {
-            echo "Producto actualizado correctamente";
+            echo "Status Code: 200 OK\nProducto actualizado correctamente";
         } else {
-            echo "Error al actualizar";
+            echo "Status Code: 409 Conflict\nError al actualizar";
         }
     }
     function deleteProduct($id)
     {
         $success = Product::delete($id);
         if ($success) {
-            echo "Producto eliminado";
+            echo "Status Code: 200 OK\nProducto eliminado";
         } else {
-            echo "Error al eliminar";
+            echo "Status Code: 409 Conflict\nError al eliminar";
         }
     }
 }

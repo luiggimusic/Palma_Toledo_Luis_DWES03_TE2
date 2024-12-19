@@ -65,12 +65,7 @@ class MovementType
     public static function getById($id)
     {
         $dataArray = self::datosJsonParseados();
-        $result = getElementById($dataArray, $id);
-        if (!$result) {
-            echo "Tipo de movimiento no encontrado";
-        } else {
-            echo $result;
-        };
+        return getElementById($dataArray, $id);
     }
 
     public static function create($newData)

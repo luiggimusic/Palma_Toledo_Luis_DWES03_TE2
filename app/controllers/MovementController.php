@@ -18,7 +18,13 @@ class MovementController
 
     function getMovementById($id)
     {
-        Movement::getById($id);
+        $success = Movement::getById($id);
+        if ($success) {
+            echo "Status Code: 200 OK\nRegistro encontrado \n";
+            print_r($success);
+        } else {
+            echo "Status Code: 409 Conflict\nNo se ha encontrado la categoría";
+        }
     }
 
     function getMovementByData($data)
@@ -37,7 +43,13 @@ class MovementController
             'supplier' => $data["supplier"],
         ];
 
-        Movement::getByData($movementData);
+        $success = Movement::getByData($movementData);
+        if ($success) {
+            echo "Status Code: 200 OK\nMovimientos encontrados \n";
+            print_r($success);
+        } else {
+            echo "Status Code: 409 Conflict\nNo se han encontrado movimientos";
+        }
     }
 
     // POST
@@ -61,9 +73,9 @@ class MovementController
         $success = Movement::sale($movementData);
 
         if ($success) {
-            echo "Movimiento registrado correctamente";
+            echo "Status Code: 200 OK\nMovimiento registrado correctamente";
         } else {
-            echo "No se ha registrado el movimiento";
+            echo "Status Code: 409 Conflict\nNo se ha registrado el movimiento";
         }
     }
 
@@ -82,14 +94,14 @@ class MovementController
             'customer' => $data["customer"],
             'supplier' => $data["supplier"],
         ];
-    
+
         // Llamo al método estático "purchase"
         $success = Movement::purchase($movementData);
-    
+
         if ($success) {
-            echo "Movimiento registrado correctamente";
+            echo "Status Code: 200 OK\nMovimiento registrado correctamente";
         } else {
-            echo "No se ha registrado el movimiento";
+            echo "Status Code: 409 Conflict\nNo se ha registrado el movimiento";
         }
     }
 
@@ -108,16 +120,14 @@ class MovementController
             'customer' => $data["customer"],
             'supplier' => $data["supplier"],
         ];
-    
-        // Llamo al método estático "inventoryTransfer"
+
+        // Llamo al método estático "create"
         $success = Movement::inventoryTransfer($movementData);
-    
+
         if ($success) {
-            echo "Movimiento registrado correctamente";
+            echo "Status Code: 200 OK\nMovimiento registrado correctamente";
         } else {
-            echo "No se ha registrado el movimiento";
+            echo "Status Code: 409 Conflict\nNo se ha registrado el movimiento";
         }
     }
 }
-
-

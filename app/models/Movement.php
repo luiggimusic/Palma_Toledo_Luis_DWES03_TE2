@@ -168,12 +168,8 @@ class Movement
     public static function getById($id)
     {
         $dataArray = self::datosJsonParseados();
-        $result = getElementById($dataArray, $id);
-        if (!$result) {
-            echo "Movimiento no encontrado";
-        } else {
-            echo $result;
-        };
+        return getElementById($dataArray, $id);
+
     }
     public static function getByData($data)
     {
@@ -240,7 +236,6 @@ class Movement
         });
 
         if (empty($filteredData)) {
-            echo "No se encontraron movimientos.";
             return;
         }
 
@@ -248,7 +243,7 @@ class Movement
         $result = json_encode(array_values($filteredData), JSON_PRETTY_PRINT);
 
         // Muestro el resultado
-        echo $result;
+        return $result;
     }
 
     public static function sale($newData)
