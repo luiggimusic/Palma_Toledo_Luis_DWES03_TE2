@@ -81,21 +81,12 @@
         "category": "Raw material"
     },
     {
-        "id": 9,
-        "productCode": "FC1H2K8AAA02",
-        "productName": "F\/B-A\/C-BMW\/M",
-        "batchNumber": "10000206",
-        "location": "M220B",
-        "quantity": 30,
-        "category": "Finished part"
-    },
-    {
         "id": 10,
         "productCode": "FC1N0F2S1B-PXI",
         "productName": "SEMIFINISHED PART P2141-S",
         "batchNumber": "10000206",
         "location": "M221",
-        "quantity": 33,
+        "quantity": 1268,
         "category": "Raw material"
     },
     {
@@ -104,7 +95,34 @@
         "productName": "BALANCE RING, OUTLET, ROTOR,PM291",
         "batchNumber": "10000254",
         "location": "M215",
-        "quantity": 500,
+        "quantity": 10,
         "category": "Finished part"
+    },
+    {
+        "id": 12,
+        "productCode": "FC1N0F2S1C-PXI",
+        "productName": "SEMIFINISHED PART P2143-S",
+        "batchNumber": "10000206",
+        "location": "M221",
+        "quantity": 33,
+        "category": "Raw material"
+    },
+    {
+        "id": 13,
+        "productCode": "FC1N0F2S1B-PXI",
+        "productName": "SEMIFINISHED PART P2141-S",
+        "batchNumber": "100002099996",
+        "location": "M221",
+        "quantity": 1235,
+        "category": ""
+    },
+    {
+        "id": 14,
+        "productCode": "1716186-00-P-FAB",
+        "productName": "BALANCE RING, OUTLET, ROTOR,PM291",
+        "batchNumber": "10000255",
+        "location": "M897",
+        "quantity": 10,
+        "category": ""
     }
 ]
