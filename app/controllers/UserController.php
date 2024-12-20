@@ -40,7 +40,7 @@ class UserController
         $success = User::create($userData);
 
         if ($success) {
-            echo "Status Code: 200 OK\nUsuario creado correctamente";
+            echo "Status Code: 201 OK\nUsuario creado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nNo se ha creado el usuario";
         }
@@ -62,7 +62,7 @@ class UserController
         $success = User::update($id, $userData);
 
         if ($success) {
-            echo "Status Code: 200 OK\nUsuario actualizado correctamente";
+            echo "Status Code: 204 OK\nUsuario actualizado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nError al actualizar";
         }
@@ -74,7 +74,7 @@ class UserController
         $success = User::delete($id);
 
         if ($success) {
-            echo "Status Code: 200 OK\nUsuario eliminado";
+            echo "Status Code: 204 OK\nUsuario eliminado";
         } else {
             echo "Status Code: 409 Conflict\nError al eliminar";
         }

@@ -39,7 +39,7 @@ class MovementTypeController
         $success = MovementType::create($movementTypeData);
 
         if ($success) {
-            echo "Status Code: 200 OK\nTipo de movimiento creado correctamente";
+            echo "Status Code: 201 OK\nTipo de movimiento creado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nNo se ha creado el tipo de movimiento";
         }
@@ -57,7 +57,7 @@ class MovementTypeController
         $success = MovementType::update($id, $data);
 
         if ($success) {
-            echo "Status Code: 200 OK\nTipo de movimiento actualizado correctamente";
+            echo "Status Code: 204 OK\nTipo de movimiento actualizado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nError al actualizar";
         }
@@ -67,7 +67,7 @@ class MovementTypeController
         $success = MovementType::delete($id);
 
         if ($success) {
-            echo "Status Code: 200 OK\nTipo de movimiento eliminado"; 
+            echo "Status Code: 204 OK\nTipo de movimiento eliminado"; 
         } 
         else{
             echo "Status Code: 409 Conflict\nError al eliminar";

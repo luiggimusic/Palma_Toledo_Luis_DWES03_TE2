@@ -40,7 +40,7 @@ class CategoryController
         $success = Category::create($categoryData);
 
         if ($success) {
-            echo "Status Code: 200 OK\nCategoria creada correctamente";
+            echo "Status Code: 201 OK\nCategoria creada correctamente";
         } else {
             echo "Status Code: 409 Conflict\nNo se ha creado la categoría";
         }
@@ -58,7 +58,7 @@ class CategoryController
         $success = Category::update($id, $data);
 
         if ($success) {
-            echo "Status Code: 200 OK\nCategoría actualizada correctamente";
+            echo "Status Code: 204 OK\nCategoría actualizada correctamente";
         } else {
             echo "Status Code: 409 Conflict\nError al actualizar";
         }
@@ -70,7 +70,7 @@ class CategoryController
         $success = Category::delete($id);
 
         if ($success) {
-            echo "Status Code: 200 OK\nCategoría eliminada";
+            echo "Status Code: 204 OK\nCategoría eliminada";
         } else {
             echo "Status Code: 409 Conflict\nError al eliminar";
         }

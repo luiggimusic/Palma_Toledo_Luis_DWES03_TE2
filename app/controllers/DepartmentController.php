@@ -40,7 +40,7 @@ class DepartmentController
         $success = Department::create($departmentData);
 
         if ($success) {
-            echo "Status Code: 200 OK\nDepartamento creado correctamente";
+            echo "Status Code: 201 OK\nDepartamento creado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nNo se ha creado el departamento";
         }
@@ -58,7 +58,7 @@ class DepartmentController
         $success = Department::update($id, $data);
 
         if ($success) {
-            echo "Status Code: 200 OK\nDepartamento actualizado correctamente";
+            echo "Status Code: 204 OK\nDepartamento actualizado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nError al actualizar";
         }
@@ -70,7 +70,7 @@ class DepartmentController
         $success = Department::delete($id);
 
         if ($success) {
-            echo "Status Code: 200 OK\nDepartamento eliminado";
+            echo "Status Code: 204 OK\nDepartamento eliminado";
         } else {
             echo "Status Code: 409 Conflict\nError al eliminar";
         }

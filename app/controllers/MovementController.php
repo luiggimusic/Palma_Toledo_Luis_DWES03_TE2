@@ -73,7 +73,7 @@ class MovementController
         $success = Movement::sale($movementData);
 
         if ($success) {
-            echo "Status Code: 200 OK\nMovimiento registrado correctamente";
+            echo "Status Code: 201 OK\nMovimiento registrado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nNo se ha registrado el movimiento";
         }
@@ -99,7 +99,7 @@ class MovementController
         $success = Movement::purchase($movementData);
 
         if ($success) {
-            echo "Status Code: 200 OK\nMovimiento registrado correctamente";
+            echo "Status Code: 201 OK\nMovimiento registrado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nNo se ha registrado el movimiento";
         }
@@ -125,7 +125,7 @@ class MovementController
         $success = Movement::inventoryTransfer($movementData);
 
         if ($success) {
-            echo "Status Code: 200 OK\nMovimiento registrado correctamente";
+            echo "Status Code: 201 OK\nMovimiento registrado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nNo se ha registrado el movimiento";
         }

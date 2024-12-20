@@ -44,7 +44,7 @@ class ProductController
         $success = Product::create($productData);
 
         if ($success) {
-            echo "Status Code: 200 OK\nProducto creado correctamente";
+            echo "Status Code: 201 OK\nProducto creado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nNo se ha creado el producto";
         }
@@ -69,7 +69,7 @@ class ProductController
         $success = Product::update($id, $data);
 
         if ($success) {
-            echo "Status Code: 200 OK\nProducto actualizado correctamente";
+            echo "Status Code: 204 OK\nProducto actualizado correctamente";
         } else {
             echo "Status Code: 409 Conflict\nError al actualizar";
         }
@@ -78,7 +78,7 @@ class ProductController
     {
         $success = Product::delete($id);
         if ($success) {
-            echo "Status Code: 200 OK\nProducto eliminado";
+            echo "Status Code: 204 OK\nProducto eliminado";
         } else {
             echo "Status Code: 409 Conflict\nError al eliminar";
         }
